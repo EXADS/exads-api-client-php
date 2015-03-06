@@ -18,7 +18,8 @@ class User extends AbstractApi
     }
 
     /**
-     * @param  array  $data
+     * @param array $data
+     *
      * @return array
      */
     public function update(array $data = array())
@@ -54,7 +55,8 @@ class User extends AbstractApi
     }
 
     /**
-     * @param  string $endPoint
+     * @param string $endPoint
+     *
      * @return string
      */
     protected function getPath($endPoint = null)

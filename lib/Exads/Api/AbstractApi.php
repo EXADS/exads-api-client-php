@@ -5,12 +5,12 @@ namespace Exads\Api;
 use Exads\Client;
 
 /**
- * Abstract class for Api classes
+ * Abstract class for Api classes.
  */
 abstract class AbstractApi
 {
     /**
-     * The client
+     * The client.
      *
      * @var Client
      */
@@ -75,7 +75,7 @@ abstract class AbstractApi
     }
 
     /**
-     * Checks if the variable passed is not null
+     * Checks if the variable passed is not null.
      *
      * @param mixed $var Variable to be checked
      *
@@ -88,11 +88,12 @@ abstract class AbstractApi
 
     /**
      * Retrieves all the elements of a given endpoint (even if the
-     * total number of elements is greater than 100)
+     * total number of elements is greater than 100).
      *
-     * @param  string $endpoint API end point
-     * @param  array  $params   optional parameters to be passed to the api (offset, limit, ...)
-     * @return array  elements found
+     * @param string $endpoint API end point
+     * @param array  $params   optional parameters to be passed to the api (offset, limit, ...)
+     *
+     * @return array elements found
      */
     protected function retrieveAll($endpoint, array $params = array())
     {
@@ -114,7 +115,8 @@ abstract class AbstractApi
     }
 
     /**
-     * @param  string $endPoint
+     * @param string $endPoint
+     *
      * @return string
      */
     protected function getPath($endPoint = null)

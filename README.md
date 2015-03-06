@@ -91,3 +91,5 @@ try {
     die($e->getMessage());
 }
 ```
+
+See `test/Exads/Tests/TestUrls.php` for a full list of available methods.

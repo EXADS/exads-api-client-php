@@ -10,8 +10,9 @@ class Login extends AbstractApi
     protected $apiGroup = 'login';
 
     /**
-     * @param  string $username
-     * @param  string $password
+     * @param string $username
+     * @param string $password
+     *
      * @return string
      */
     public function getToken($username, $password)

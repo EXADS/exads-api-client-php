@@ -66,7 +66,8 @@ class Collection extends AbstractApi
     }
 
     /**
-     * @param  string $endPoint
+     * @param string $endPoint
+     *
      * @return string
      */
     protected function getPath($endPoint = null)

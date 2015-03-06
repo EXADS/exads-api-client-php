@@ -5,7 +5,8 @@ namespace Exads;
 use Exads\Api\SimpleXMLElement;
 
 /**
- * Simple PHP Exads client
+ * Simple PHP Exads client.
+ *
  * @link http://github.com/exads/php-exads-api
  */
 class Client
@@ -69,7 +70,7 @@ class Client
     private $responseCode = null;
 
     /**
-     * Error strings if json is invalid
+     * Error strings if json is invalid.
      */
     private static $jsonErrors = array(
         JSON_ERROR_NONE => 'No error has occurred',
@@ -88,8 +89,10 @@ class Client
     }
 
     /**
-     * @param  string                    $name
+     * @param string $name
+     *
      * @return Api\AbstractApi
+     *
      * @throws \InvalidArgumentException
      */
     public function api($name)
@@ -127,7 +130,8 @@ class Client
     }
 
     /**
-     * @param  string $url
+     * @param string $url
+     *
      * @return Client
      */
     public function setUrl($url)
@@ -138,9 +142,11 @@ class Client
     }
 
     /**
-     * HTTP GETs a json $path and tries to decode it
-     * @param  string  $path
-     * @param  boolean $decode
+     * HTTP GETs a json $path and tries to decode it.
+     *
+     * @param string  $path
+     * @param boolean $decode
+     *
      * @return array
      */
     public function get($path, $decode = true)
@@ -162,7 +168,8 @@ class Client
      * Returns $json if no error occured during decoding but decoded value is
      * null.
      *
-     * @param  string       $json
+     * @param string $json
+     *
      * @return array|string
      */
     public function decode($json)
@@ -179,9 +186,11 @@ class Client
     }
 
     /**
-     * HTTP POSTs $params to $path
-     * @param  string $path
-     * @param  mixed $data
+     * HTTP POSTs $params to $path.
+     *
+     * @param string $path
+     * @param mixed  $data
+     *
      * @return mixed
      */
     public function post($path, $data = null)
@@ -197,9 +206,11 @@ class Client
     }
 
     /**
-     * HTTP PUTs $params to $path
-     * @param  string $path
-     * @param  mixed $data
+     * HTTP PUTs $params to $path.
+     *
+     * @param string $path
+     * @param mixed  $data
+     *
      * @return array
      */
     public function put($path, $data = null)
@@ -215,8 +226,10 @@ class Client
     }
 
     /**
-     * HTTP PUTs $params to $path
-     * @param  string $path
+     * HTTP PUTs $params to $path.
+     *
+     * @param string $path
+     *
      * @return array
      */
     public function delete($path)
@@ -225,8 +238,10 @@ class Client
     }
 
     /**
-     * Turns on/off ssl certificate check
-     * @param  boolean $check
+     * Turns on/off ssl certificate check.
+     *
+     * @param boolean $check
+     *
      * @return Client
      */
     public function setCheckSslCertificate($check = false)
@@ -237,8 +252,10 @@ class Client
     }
 
     /**
-     * Turns on/off ssl host certificate check
-     * @param  boolean $check
+     * Turns on/off ssl host certificate check.
+     *
+     * @param boolean $check
+     *
      * @return Client
      */
     public function setCheckSslHost($check = false)
@@ -249,8 +266,10 @@ class Client
     }
 
     /**
-     * Set the port of the connection
-     * @param  int    $port
+     * Set the port of the connection.
+     *
+     * @param int $port
+     *
      * @return Client
      */
     public function setPort($port = null)
@@ -263,7 +282,8 @@ class Client
     }
 
     /**
-     * Returns Exads response code
+     * Returns Exads response code.
+     *
      * @return int
      */
     public function getResponseCode()
@@ -298,6 +318,7 @@ class Client
      * Set the apiToken object globally from json encoded token object.
      *
      * @param string $apiToken json token object
+     *
      * @return Client
      */
     public function setApiToken($apiToken)
@@ -321,7 +342,9 @@ class Client
      * @param string $path
      * @param string $method
      * @param string $data
+     *
      * @return boolean|SimpleXMLElement|string
+     *
      * @throws \Exception If anything goes wrong on curl request
      */
     protected function runRequest($path, $method = 'GET', $data = '')
@@ -395,6 +418,7 @@ class Client
 
     /**
      * @param int $code
+     *
      * @return boolean
      */
     private function isErrorCode($code)

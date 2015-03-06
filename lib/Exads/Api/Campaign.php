@@ -18,7 +18,8 @@ class Campaign extends AbstractApi
     }
 
     /**
-     * @param  string $id
+     * @param string $id
+     *
      * @return array
      */
     public function show($id)
@@ -27,7 +28,8 @@ class Campaign extends AbstractApi
     }
 
     /**
-     * @param  string $id
+     * @param string $id
+     *
      * @return boolean
      */
     public function copy($id)
@@ -36,7 +38,8 @@ class Campaign extends AbstractApi
     }
 
     /**
-     * @param  string $id
+     * @param string $id
+     *
      * @return boolean
      */
     public function delete($id)
@@ -45,7 +48,8 @@ class Campaign extends AbstractApi
     }
 
     /**
-     * @param  string $id
+     * @param string $id
+     *
      * @return boolean
      */
     public function pause($id)
@@ -54,7 +58,8 @@ class Campaign extends AbstractApi
     }
 
     /**
-     * @param  string $id
+     * @param string $id
+     *
      * @return boolean
      */
     public function play($id)
@@ -63,7 +68,8 @@ class Campaign extends AbstractApi
     }
 
     /**
-     * @param  string $id
+     * @param string $id
+     *
      * @return boolean
      */
     public function restore($id)
@@ -72,7 +78,8 @@ class Campaign extends AbstractApi
     }
 
     /**
-     * @param  string $endPoint
+     * @param string $endPoint
+     *
      * @return string
      */
     protected function getPath($endPoint = null, $id = null)
@@ -94,6 +101,7 @@ class Campaign extends AbstractApi
         if (null === $id) {
             return sprintf($path, $this->apiGroup);
         }
+
         return sprintf($path, $this->apiGroup, urlencode($id));
     }
 }
