@@ -1,0 +1,27 @@
+{
+    "name": "exads/exads-api-client-php",
+    "type": "library",
+    "description": "Exads API client",
+    "homepage": "https://github.com/EXADS/exads-api-client-php",
+    "keywords": ["exads", "api"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Saliou",
+            "email": "kevin@saliou.name",
+            "homepage": "http://kevin.saliou.name"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "Exads": "lib/"
+        }
+    }
+}
