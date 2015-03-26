@@ -76,12 +76,13 @@ $client = new Exads\Client('https://api.exads.com/url/');
 
 
 ```php
+<?php
 
 require_once 'vendor/autoload.php';
 
 try {
     $client = new Exads\Client('https://api.exads.com/url/');
-    $apiToken = $client->api('login')->getToken('kbsali', 'VOLqQtJXfoBwA');
+    $apiToken = $client->api('login')->getToken('username', 'password');
     $client->setApiToken($apiToken);
 
     // ...
@@ -92,4 +93,23 @@ try {
 }
 ```
 
-See `test/Exads/Tests/TestUrls.php` for a full list of available methods.
+See `test/Exads/Tests/UrlsTest.php` for a full list of available methods.
+
+#### Passing parameters to end points
+
+As describe in the API documentation, most of the `GET` entry points accept parameters for filtering the result of the call.
+In particular, for long collections, you should use `offset` for paginating the results the API returns (you cannot get more than 50 elements out of 1 call, that's when offset comes in play).
+See the following examples :
+
+```php
+<?php
+...
+
+// Getting the total number of carriers
+$client->api('collections')->carriers(array('count' => true));
+
+// Getting the carriers 50..100
+$client->api('collections')->carriers(array('offset' => 50));
+```
+
+Please refer to the documentation for the full list of parameters allowed for each entry point.

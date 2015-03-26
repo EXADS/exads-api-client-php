@@ -4,7 +4,7 @@ namespace Exads\Tests;
 
 use Exads\TestUrlClient;
 
-class TestUrlsTest extends \PHPUnit_Framework_TestCase
+class UrlsTest extends \PHPUnit_Framework_TestCase
 {
     private $client;
 
@@ -13,14 +13,6 @@ class TestUrlsTest extends \PHPUnit_Framework_TestCase
         $this->client = new TestUrlClient('http://localhost');
     }
 
-    /**
-     * @test
-     */
-    public function test_get_parameters_presence()
-    {
-        $res = $this->client->api('campaigns')->all(array('offset' => 100));
-        $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));
-    }
     /**
      * @test
      */
@@ -214,5 +206,14 @@ class TestUrlsTest extends \PHPUnit_Framework_TestCase
     {
         $res = $this->client->api('zones')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'zones'));
+    }
+
+    /**
+     * @test
+     */
+    public function test_get_parameters_presence()
+    {
+        $res = $this->client->api('campaigns')->all(array('offset' => 100));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));
     }
 }
