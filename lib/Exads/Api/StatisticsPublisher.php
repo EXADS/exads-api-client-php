@@ -11,11 +11,11 @@ class StatisticsPublisher extends AbstractStatistics
 
     public function sub()
     {
-        return $this->post($this->getPath('sub'));
+        return $this->get($this->getPath('sub'));
     }
 
     public function zone()
     {
-        return $this->post($this->getPath('zone'));
+        return $this->get($this->getPath('zone'));
     }
 }

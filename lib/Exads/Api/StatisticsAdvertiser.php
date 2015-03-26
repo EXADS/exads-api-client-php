@@ -11,11 +11,11 @@ class StatisticsAdvertiser extends AbstractStatistics
 
     public function language()
     {
-        return $this->post($this->getPath('language'));
+        return $this->get($this->getPath('language'));
     }
 
     public function variation()
     {
-        return $this->post($this->getPath('variation'));
+        return $this->get($this->getPath('variation'));
     }
 }
