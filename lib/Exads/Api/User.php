@@ -10,11 +10,13 @@ class User extends AbstractApi
     protected $apiGroup = 'user';
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function show()
+    public function show(array $params = array())
     {
-        return $this->get($this->getPath('get'));
+        return $this->get($this->getPath('get'), $params);
     }
 
     /**

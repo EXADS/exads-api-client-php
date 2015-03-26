@@ -10,59 +10,73 @@ class Collection extends AbstractApi
     protected $apiGroup = 'collections';
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function all()
+    public function all(array $params = array())
     {
-        return $this->get($this->getPath('all'));
+        return $this->get($this->getPath('all'), $params);
     }
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function browsers()
+    public function browsers(array $params = array())
     {
-        return $this->get($this->getPath('browsers'));
+        return $this->get($this->getPath('browsers'), $params);
     }
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function carriers()
+    public function carriers(array $params = array())
     {
-        return $this->get($this->getPath('carriers'));
+        return $this->get($this->getPath('carriers'), $params);
     }
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function categories()
+    public function categories(array $params = array())
     {
-        return $this->get($this->getPath('categories'));
+        return $this->get($this->getPath('categories'), $params);
     }
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function devices()
+    public function devices(array $params = array())
     {
-        return $this->get($this->getPath('devices'));
+        return $this->get($this->getPath('devices'), $params);
     }
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function languages()
+    public function languages(array $params = array())
     {
-        return $this->get($this->getPath('languages'));
+        return $this->get($this->getPath('languages'), $params);
     }
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function os()
+    public function os(array $params = array())
     {
-        return $this->get($this->getPath('os'));
+        return $this->get($this->getPath('os'), $params);
     }
 
     /**

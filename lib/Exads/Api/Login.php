@@ -21,7 +21,6 @@ class Login extends AbstractApi
             'username' => $username,
             'password' => $password,
         );
-        var_dump($this->post($this->getPath(), $data));
 
         return $this->post($this->getPath(), $data);
     }

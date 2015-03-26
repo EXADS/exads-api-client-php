@@ -10,21 +10,24 @@ class Campaign extends AbstractApi
     protected $apiGroup = 'campaigns';
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function all()
+    public function all(array $params = array())
     {
-        return $this->get($this->getPath('all'));
+        return $this->get($this->getPath('all'), $params);
     }
 
     /**
      * @param string $id
+     * @param array  $params
      *
      * @return array
      */
-    public function show($id)
+    public function show($id, array $params = array())
     {
-        return $this->get($this->getPath('show', $id));
+        return $this->get($this->getPath('show', $id), $params);
     }
 
     /**

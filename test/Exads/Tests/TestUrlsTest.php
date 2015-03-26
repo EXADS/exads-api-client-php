@@ -4,7 +4,7 @@ namespace Exads\Tests;
 
 use Exads\TestUrlClient;
 
-class TestUrls extends \PHPUnit_Framework_TestCase
+class TestUrlsTest extends \PHPUnit_Framework_TestCase
 {
     private $client;
 
@@ -13,6 +13,14 @@ class TestUrls extends \PHPUnit_Framework_TestCase
         $this->client = new TestUrlClient('http://localhost');
     }
 
+    /**
+     * @test
+     */
+    public function test_get_parameters_presence()
+    {
+        $res = $this->client->api('campaigns')->all(array('offset' => 100));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));
+    }
     /**
      * @test
      */
@@ -109,37 +117,37 @@ class TestUrls extends \PHPUnit_Framework_TestCase
     public function test_statistics_advertiser_methods()
     {
         $res = $this->client->api('statistics_advertiser')->browser();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/browser'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/browser'));
 
         $res = $this->client->api('statistics_advertiser')->carrier();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/carrier'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/carrier'));
 
         $res = $this->client->api('statistics_advertiser')->category();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/category'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/category'));
 
         $res = $this->client->api('statistics_advertiser')->country();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/country'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/country'));
 
         $res = $this->client->api('statistics_advertiser')->date();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/date'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/date'));
 
         $res = $this->client->api('statistics_advertiser')->device();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/device'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/device'));
 
         $res = $this->client->api('statistics_advertiser')->hour();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/hour'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/hour'));
 
         $res = $this->client->api('statistics_advertiser')->os();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/os'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/os'));
 
         $res = $this->client->api('statistics_advertiser')->site();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/site'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/site'));
 
         $res = $this->client->api('statistics_advertiser')->language();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/language'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/language'));
 
         $res = $this->client->api('statistics_advertiser')->variation();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/advertiser/variation'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/variation'));
     }
 
     /**
@@ -148,37 +156,37 @@ class TestUrls extends \PHPUnit_Framework_TestCase
     public function test_statistics_publisher_methods()
     {
         $res = $this->client->api('statistics_publisher')->browser();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/browser'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/browser'));
 
         $res = $this->client->api('statistics_publisher')->carrier();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/carrier'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/carrier'));
 
         $res = $this->client->api('statistics_publisher')->category();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/category'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/category'));
 
         $res = $this->client->api('statistics_publisher')->country();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/country'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/country'));
 
         $res = $this->client->api('statistics_publisher')->date();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/date'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/date'));
 
         $res = $this->client->api('statistics_publisher')->device();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/device'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/device'));
 
         $res = $this->client->api('statistics_publisher')->hour();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/hour'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/hour'));
 
         $res = $this->client->api('statistics_publisher')->os();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/os'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/os'));
 
         $res = $this->client->api('statistics_publisher')->site();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/site'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/site'));
 
         $res = $this->client->api('statistics_publisher')->sub();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/sub'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/sub'));
 
         $res = $this->client->api('statistics_publisher')->zone();
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'statistics/publisher/zone'));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/zone'));
     }
 
     /**

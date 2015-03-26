@@ -9,13 +9,23 @@ class StatisticsPublisher extends AbstractStatistics
 {
     protected $subGroup = 'publisher';
 
-    public function sub()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function sub(array $params = array())
     {
-        return $this->get($this->getPath('sub'));
+        return $this->get($this->getPath('sub'), $params);
     }
 
-    public function zone()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function zone(array $params = array())
     {
-        return $this->get($this->getPath('zone'));
+        return $this->get($this->getPath('zone'), $params);
     }
 }

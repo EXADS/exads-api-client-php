@@ -15,7 +15,7 @@ class Client
      * @var array
      */
     private static $defaultPorts = array(
-        'http'  => 80,
+        'http' => 80,
         'https' => 443,
     );
 
@@ -145,12 +145,16 @@ class Client
      * HTTP GETs a json $path and tries to decode it.
      *
      * @param string  $path
+     * @param array   $params
      * @param boolean $decode
      *
      * @return array
      */
-    public function get($path, $decode = true)
+    public function get($path, array $params = array(), $decode = true)
     {
+        if (count($params) > 0) {
+            $path = sprintf('%s?%s', $path, http_build_query($params));
+        }
         if (false === $json = $this->runRequest($path, 'GET')) {
             return false;
         }
@@ -282,16 +286,6 @@ class Client
     }
 
     /**
-     * Returns Exads response code.
-     *
-     * @return int
-     */
-    public function getResponseCode()
-    {
-        return (int) $this->responseCode;
-    }
-
-    /**
      * Returns the port of the current connection,
      * if not set, it will try to guess the port
      * from the url of the client.
@@ -315,6 +309,16 @@ class Client
     }
 
     /**
+     * Returns Exads response code.
+     *
+     * @return int
+     */
+    public function getResponseCode()
+    {
+        return (int) $this->responseCode;
+    }
+
+    /**
      * Set the apiToken object globally from json encoded token object.
      *
      * @param string $apiToken json token object
@@ -324,7 +328,6 @@ class Client
     public function setApiToken($apiToken)
     {
         $apiTokenObject = json_decode($apiToken);
-        var_dump($apiTokenObject);
         $this->apiToken = sprintf('%s %s', $apiTokenObject->type, $apiTokenObject->token);
 
         return $this;
@@ -370,6 +373,7 @@ class Client
             $requestHeader[] = sprintf('Authorization: %s', $this->apiToken);
         }
         curl_setopt($curl, CURLOPT_HTTPHEADER, $requestHeader);
+        echo $this->url.$path."\n";
 
         switch ($method) {
             case 'POST':
@@ -426,6 +430,12 @@ class Client
         return 400 <= (int) $code && (int) $code <= 599;
     }
 
+    /**
+     * @param string $rawResponse
+     * @param string $headerSize
+     *
+     * @return array
+     */
     private function parseResponse($rawResponse, $headerSize)
     {
         $header = substr($rawResponse, 0, $headerSize);

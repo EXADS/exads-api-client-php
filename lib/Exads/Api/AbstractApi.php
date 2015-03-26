@@ -25,13 +25,15 @@ abstract class AbstractApi
     /**
      * Perform the client get() method.
      *
-     * @param string $path
+     * @param string  $path
+     * @param array   $params
+     * @param boolean $decode
      *
-     * @return array
+     * @return array|string
      */
-    protected function get($path, $decode = true)
+    protected function get($path, array $params = array(), $decode = true)
     {
-        return $this->client->get($path, $decode);
+        return $this->client->get($path, $params, $decode);
     }
 
     /**

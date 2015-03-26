@@ -10,49 +10,94 @@ abstract class AbstractStatistics extends AbstractApi
     protected $apiGroup = 'statistics';
     protected $subGroup = null;
 
-    public function browser()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function browser(array $params = array())
     {
-        return $this->get($this->getPath('browser'));
+        return $this->get($this->getPath('browser'), $params);
     }
 
-    public function carrier()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function carrier(array $params = array())
     {
-        return $this->get($this->getPath('carrier'));
+        return $this->get($this->getPath('carrier'), $params);
     }
 
-    public function category()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function category(array $params = array())
     {
-        return $this->get($this->getPath('category'));
+        return $this->get($this->getPath('category'), $params);
     }
 
-    public function country()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function country(array $params = array())
     {
-        return $this->get($this->getPath('country'));
+        return $this->get($this->getPath('country'), $params);
     }
 
-    public function date()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function date(array $params = array())
     {
-        return $this->get($this->getPath('date'));
+        return $this->get($this->getPath('date'), $params);
     }
 
-    public function device()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function device(array $params = array())
     {
-        return $this->get($this->getPath('device'));
+        return $this->get($this->getPath('device'), $params);
     }
 
-    public function hour()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function hour(array $params = array())
     {
-        return $this->get($this->getPath('hour'));
+        return $this->get($this->getPath('hour'), $params);
     }
 
-    public function os()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function os(array $params = array())
     {
-        return $this->get($this->getPath('os'));
+        return $this->get($this->getPath('os'), $params);
     }
 
-    public function site()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function site(array $params = array())
     {
-        return $this->get($this->getPath('site'));
+        return $this->get($this->getPath('site'), $params);
     }
 
     protected function getPath($endPoint = null)

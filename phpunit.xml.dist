@@ -11,10 +11,11 @@
     stopOnFailure="false"
     syntaxCheck="false"
     bootstrap="lib/autoload.php"
+    verbose="true"
 >
     <testsuites>
         <testsuite name="exads-api-client-php Test Suite">
-            <directory>./test/Exads/</directory>
+            <directory>./test/Exads/Tests</directory>
         </testsuite>
     </testsuites>
 

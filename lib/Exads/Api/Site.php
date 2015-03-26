@@ -10,10 +10,12 @@ class Site extends AbstractApi
     protected $apiGroup = 'sites';
 
     /**
+     * @param array $params
+     *
      * @return array
      */
-    public function all()
+    public function all(array $params = array())
     {
-        return $this->get($this->getPath());
+        return $this->get($this->getPath(), $params);
     }
 }

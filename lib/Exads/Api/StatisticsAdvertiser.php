@@ -9,13 +9,23 @@ class StatisticsAdvertiser extends AbstractStatistics
 {
     protected $subGroup = 'advertiser';
 
-    public function language()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function language(array $params = array())
     {
-        return $this->get($this->getPath('language'));
+        return $this->get($this->getPath('language'), $params);
     }
 
-    public function variation()
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function variation(array $params = array())
     {
-        return $this->get($this->getPath('variation'));
+        return $this->get($this->getPath('variation'), $params);
     }
 }
