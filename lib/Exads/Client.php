@@ -373,7 +373,6 @@ class Client
             $requestHeader[] = sprintf('Authorization: %s', $this->apiToken);
         }
         curl_setopt($curl, CURLOPT_HTTPHEADER, $requestHeader);
-        echo $this->url.$path."\n";
 
         switch ($method) {
             case 'POST':
