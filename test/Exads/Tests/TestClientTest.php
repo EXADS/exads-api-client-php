@@ -31,22 +31,22 @@ class TestClientTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Exads\TestClient
      * @test
+     * @expectedException Exception
      */
     public function test_post_method_not_available()
     {
-        $returnData = 'some data';
         $client = new TestClient('http://localhost');
-        $this->assertSame($returnData, $client->post('does_not_exist', $returnData));
+        $res = $client->post('does_not_exist', 'POST method not available');
     }
 
     /**
      * @covers Exads\TestClient
      * @test
+     * @expectedException Exception
      */
     public function test_put_method_not_available()
     {
-        $returnData = 'some data';
         $client = new TestClient('http://localhost');
-        $this->assertSame($returnData, $client->put('does_not_exist', $returnData));
+        $client->put('does_not_exist', 'PUT method not available');
     }
 }

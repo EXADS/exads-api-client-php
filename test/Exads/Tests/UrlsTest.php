@@ -27,7 +27,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('campaigns')->copy(1);
         $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/copy'));
 
-        $res = $this->client->api('campaigns')->delete(1);
+        $res = $this->client->api('campaigns')->remove(1);
         $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/delete'));
 
         $res = $this->client->api('campaigns')->pause(1);
@@ -38,6 +38,75 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->api('campaigns')->restore(1);
         $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/restore'));
+    }
+
+    /**
+     * @test
+     * @dataProvider getValidElementTypes
+     */
+    public function test_campaigns_methods_with_element_type($elementType)
+    {
+        $res = $this->client->api('campaigns')->addElement($elementType, 1, 'targeted');
+        $this->assertEquals($res, array('method' => 'POST', 'path' => 'campaigns/1/targeted/'.$elementType));
+
+        $res = $this->client->api('campaigns')->replaceElement($elementType, 2, 'blocked');
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/2/blocked/'.$elementType));
+
+        $res = $this->client->api('campaigns')->removeElement($elementType, 3, 'targeted');
+        $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/3/targeted/'.$elementType));
+
+        $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, 'targeted');
+        $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
+    }
+
+    public function getValidElementTypes()
+    {
+        return array(
+            array('browsers'),
+            array('carriers'),
+            array('categories'),
+            array('countries'),
+            array('devices'),
+            array('languages'),
+            array('operating_systems'),
+            array('sites'),
+        );
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_campaigns_methods_with_invalid_element_type()
+    {
+        $this->client->api('campaigns')->addElement('bla', 1, 'targeted');
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_campaigns_methods_with_invalid_element_type2()
+    {
+        $this->client->api('campaigns')->replaceElement('bla', 1, 'blocked');
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_campaigns_methods_with_invalid_element_type3()
+    {
+        $this->client->api('campaigns')->removeElement('bla', 1, 'targeted');
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_campaigns_methods_with_invalid_element_type4()
+    {
+        $this->client->api('campaigns')->removeAllElements('bla', 1, 'targeted');
     }
 
     /**

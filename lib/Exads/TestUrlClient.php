@@ -5,8 +5,8 @@ namespace Exads;
 class TestUrlClient extends Client
 {
     /**
-     * @param string  $path
-     * @param boolean $decode
+     * @param string $path
+     * @param bool   $decode
      *
      * @return array
      */

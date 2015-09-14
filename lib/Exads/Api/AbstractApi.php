@@ -25,9 +25,9 @@ abstract class AbstractApi
     /**
      * Perform the client get() method.
      *
-     * @param string  $path
-     * @param array   $params
-     * @param boolean $decode
+     * @param string $path
+     * @param array  $params
+     * @param bool   $decode
      *
      * @return array|string
      */
@@ -40,7 +40,7 @@ abstract class AbstractApi
      * Perform the client post() method.
      *
      * @param string $path
-     * @param string $data
+     * @param array  $data
      *
      * @return string|false
      */
@@ -53,7 +53,7 @@ abstract class AbstractApi
      * Perform the client put() method.
      *
      * @param string $path
-     * @param string $data
+     * @param array  $data
      *
      * @return string|false
      */
@@ -66,12 +66,13 @@ abstract class AbstractApi
      * Perform the client delete() method.
      *
      * @param string $path
+     * @param array  $data
      *
      * @return array
      */
-    protected function delete($path)
+    protected function delete($path, $data = null)
     {
-        return $this->client->delete($path);
+        return $this->client->delete($path, $data);
     }
 
     /**
@@ -101,7 +102,7 @@ abstract class AbstractApi
             return $this->get($endpoint);
         }
         $defaults = array(
-            'limit'  => 25,
+            'limit' => 25,
             'offset' => 0,
         );
         $params = array_filter(

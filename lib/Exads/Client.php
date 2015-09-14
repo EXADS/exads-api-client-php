@@ -50,12 +50,12 @@ class Client
     private $pass;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $checkSslCertificate = false;
 
     /**
-     * @var boolean
+     * @var bool
      */
     private $checkSslHost = false;
 
@@ -144,9 +144,9 @@ class Client
     /**
      * HTTP GETs a json $path and tries to decode it.
      *
-     * @param string  $path
-     * @param array   $params
-     * @param boolean $decode
+     * @param string $path
+     * @param array  $params
+     * @param bool   $decode
      *
      * @return array
      */
@@ -199,12 +199,7 @@ class Client
      */
     public function post($path, $data = null)
     {
-        if (null === $data) {
-            $data = array();
-        }
-        if (is_array($data)) {
-            $data = json_encode($data);
-        }
+        $data = $this->encodeData($data);
 
         return $this->runRequest($path, 'POST', $data);
     }
@@ -219,12 +214,7 @@ class Client
      */
     public function put($path, $data = null)
     {
-        if (null === $data) {
-            $data = array();
-        }
-        if (is_array($data)) {
-            $data = json_encode($data);
-        }
+        $data = $this->encodeData($data);
 
         return $this->runRequest($path, 'PUT', $data);
     }
@@ -233,18 +223,24 @@ class Client
      * HTTP PUTs $params to $path.
      *
      * @param string $path
+     * @param mixed  $data
      *
      * @return array
      */
-    public function delete($path)
+    public function delete($path, $data = null)
     {
-        return $this->runRequest($path, 'DELETE');
+        if (null === $data) {
+            return $this->runRequest($path, 'DELETE');
+        }
+        $data = $this->encodeData($data);
+
+        return $this->runRequest($path, 'DELETE', $data);
     }
 
     /**
      * Turns on/off ssl certificate check.
      *
-     * @param boolean $check
+     * @param bool $check
      *
      * @return Client
      */
@@ -258,7 +254,7 @@ class Client
     /**
      * Turns on/off ssl host certificate check.
      *
-     * @param boolean $check
+     * @param bool $check
      *
      * @return Client
      */
@@ -346,7 +342,7 @@ class Client
      * @param string $method
      * @param string $data
      *
-     * @return boolean|SimpleXMLElement|string
+     * @return bool|SimpleXMLElement|string
      *
      * @throws \Exception If anything goes wrong on curl request
      */
@@ -356,9 +352,9 @@ class Client
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $this->url.$path);
-        curl_setopt($curl, CURLOPT_VERBOSE, 0);
-        curl_setopt($curl, CURLOPT_HEADER, 1);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_VERBOSE, false);
+        curl_setopt($curl, CURLOPT_HEADER, true);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_PORT, $this->getPort());
         if (80 !== $this->getPort()) {
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, $this->checkSslCertificate);
@@ -373,10 +369,9 @@ class Client
             $requestHeader[] = sprintf('Authorization: %s', $this->apiToken);
         }
         curl_setopt($curl, CURLOPT_HTTPHEADER, $requestHeader);
-
         switch ($method) {
             case 'POST':
-                curl_setopt($curl, CURLOPT_POST, 1);
+                curl_setopt($curl, CURLOPT_POST, true);
                 if (isset($data)) {
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
                 }
@@ -388,7 +383,11 @@ class Client
                 }
                 break;
             case 'DELETE':
+                curl_setopt($curl, CURLOPT_HEADER, false);
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                if (isset($data)) {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                }
                 break;
             default: // GET
                 break;
@@ -406,6 +405,8 @@ class Client
         $response = $this->parseResponse($rawResponse, $headerSize);
 
         if ($this->isErrorCode($responseCode)) {
+            echo 'response';
+            var_dump($response);
             $e = new \Exception($response['body']);
             curl_close($curl);
             throw $e;
@@ -422,11 +423,25 @@ class Client
     /**
      * @param int $code
      *
-     * @return boolean
+     * @return bool
      */
     private function isErrorCode($code)
     {
         return 400 <= (int) $code && (int) $code <= 599;
+    }
+
+    /**
+     * @param mixed $data
+     *
+     * @return array|json
+     */
+    private function encodeData($data = null)
+    {
+        if (is_array($data)) {
+            return json_encode($data);
+        }
+
+        return array();
     }
 
     /**
