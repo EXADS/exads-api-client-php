@@ -212,6 +212,9 @@ class Campaign extends AbstractApi
             $elementTypes = $this->getElementTypes($endPoint);
             foreach ($elementTypes as $elementType) {
                 $pathMapping[$elementType] = '%s/%s/%s/'.$elementType;
+                if ('countries' === $elementType) {
+                    continue;
+                }
                 $pathMapping[$elementType.'_all'] = '%s/%s/%s/'.$elementType.'/all';
             }
         }

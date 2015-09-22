@@ -55,8 +55,10 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('campaigns')->removeElement($elementType, 3, 'targeted');
         $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/3/targeted/'.$elementType));
 
-        $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, 'targeted');
-        $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
+        if ('countries' !== $elementType) {
+            $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, 'targeted');
+            $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
+        }
     }
 
     public function getValidElementTypes()
