@@ -79,6 +79,19 @@ class Client
         JSON_ERROR_SYNTAX => 'Syntax error',
     );
 
+    private $classes = array(
+        'campaigns' => 'Campaign',
+        'login' => 'Login',
+        'collections' => 'Collection',
+        'payments_advertiser' => 'PaymentAdvertiser',
+        'payments_publisher' => 'PaymentPublisher',
+        'sites' => 'Site',
+        'statistics_advertiser' => 'StatisticsAdvertiser',
+        'statistics_publisher' => 'StatisticsPublisher',
+        'user' => 'User',
+        'zones' => 'Zone',
+    );
+
     /**
      * @param string $url
      */
@@ -97,28 +110,28 @@ class Client
      */
     public function api($name)
     {
-        $classes = array(
-            'campaigns' => 'Campaign',
-            'login' => 'Login',
-            'collections' => 'Collection',
-            'payments_advertiser' => 'PaymentAdvertiser',
-            'payments_publisher' => 'PaymentPublisher',
-            'sites' => 'Site',
-            'statistics_advertiser' => 'StatisticsAdvertiser',
-            'statistics_publisher' => 'StatisticsPublisher',
-            'user' => 'User',
-            'zones' => 'Zone',
-        );
-        if (!isset($classes[$name])) {
-            throw new \InvalidArgumentException();
+        if (!isset($this->classes[$name])) {
+            throw new \InvalidArgumentException('Available api : '.implode(', ', array_keys($this->classes)));
         }
         if (isset($this->apis[$name])) {
             return $this->apis[$name];
         }
-        $c = 'Exads\Api\\'.$classes[$name];
+        $c = 'Exads\Api\\'.$this->classes[$name];
         $this->apis[$name] = new $c($this);
 
         return $this->apis[$name];
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Api\AbstractApi
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function __get($name)
+    {
+        return $this->api($name);
     }
 
     /**
@@ -405,8 +418,6 @@ class Client
         $response = $this->parseResponse($rawResponse, $headerSize);
 
         if ($this->isErrorCode($responseCode)) {
-            echo 'response';
-            var_dump($response);
             $e = new \Exception($response['body']);
             curl_close($curl);
             throw $e;

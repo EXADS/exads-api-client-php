@@ -57,9 +57,9 @@ See the latest version available : https://github.com/EXADS/exads-api-client-php
 
 ```bash
 $ mkdir vendor
-$ wget -q https://github.com/EXADS/exads-api-client-php/archive/v1.0.0.tar.gz
-$ tar -xf v1.0.0.tar.gz -C vendor/
-$ rm v1.0.0.tar.gz
+$ wget -q https://github.com/EXADS/exads-api-client-php/archive/v1.1.1.tar.gz
+$ tar -xf v1.1.1.tar.gz -C vendor/
+$ rm v1.1.1.tar.gz
 ```
 
 Then your bootstrap script should look like :
@@ -82,11 +82,11 @@ require_once 'vendor/autoload.php';
 
 try {
     $client = new Exads\Client('https://api.exads.com/url/');
-    $apiToken = $client->api('login')->getToken('username', 'password');
+    $apiToken = $client->login->getToken('username', 'password');
     $client->setApiToken($apiToken);
 
     // ...
-    $campaigns = $client->api('campaigns')->all();
+    $campaigns = $client->campaigns->all();
     // ...
 } catch (\Exception $e) {
     die($e->getMessage());
@@ -106,10 +106,10 @@ See the following examples :
 ...
 
 // Getting the total number of carriers
-$client->api('collections')->carriers(array('count' => true));
+$client->collections->carriers(array('count' => true));
 
 // Getting the carriers 50..100
-$client->api('collections')->carriers(array('offset' => 50));
+$client->collections->carriers(array('offset' => 50));
 ```
 
 Please refer to the documentation for the full list of parameters allowed for each entry point.

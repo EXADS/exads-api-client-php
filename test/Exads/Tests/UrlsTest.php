@@ -15,6 +15,15 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_invalid_api_name()
+    {
+        $this->client->bla;
+    }
+
+    /**
+     * @test
      */
     public function test_campaigns_methods()
     {
@@ -38,6 +47,27 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->api('campaigns')->restore(1);
         $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/restore'));
+
+        $res = $this->client->campaigns->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
+
+        $res = $this->client->campaigns->show(1);
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns/1'));
+
+        $res = $this->client->campaigns->copy(1);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/copy'));
+
+        $res = $this->client->campaigns->remove(1);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/delete'));
+
+        $res = $this->client->campaigns->pause(1);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/pause'));
+
+        $res = $this->client->campaigns->play(1);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/play'));
+
+        $res = $this->client->campaigns->restore(1);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/restore'));
     }
 
     /**
@@ -57,6 +87,20 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         if ('countries' !== $elementType) {
             $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, 'targeted');
+            $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
+        }
+
+        $res = $this->client->campaigns->addElement($elementType, 1, 'targeted');
+        $this->assertEquals($res, array('method' => 'POST', 'path' => 'campaigns/1/targeted/'.$elementType));
+
+        $res = $this->client->campaigns->replaceElement($elementType, 2, 'blocked');
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/2/blocked/'.$elementType));
+
+        $res = $this->client->campaigns->removeElement($elementType, 3, 'targeted');
+        $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/3/targeted/'.$elementType));
+
+        if ('countries' !== $elementType) {
+            $res = $this->client->campaigns->removeAllElements($elementType, 4, 'targeted');
             $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
         }
     }
@@ -82,6 +126,8 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_campaigns_methods_with_invalid_element_type()
     {
         $this->client->api('campaigns')->addElement('bla', 1, 'targeted');
+
+        $this->client->campaigns->addElement('bla', 1, 'targeted');
     }
 
     /**
@@ -91,6 +137,8 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_campaigns_methods_with_invalid_element_type2()
     {
         $this->client->api('campaigns')->replaceElement('bla', 1, 'blocked');
+
+        $this->client->campaigns->replaceElement('bla', 1, 'blocked');
     }
 
     /**
@@ -100,6 +148,8 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_campaigns_methods_with_invalid_element_type3()
     {
         $this->client->api('campaigns')->removeElement('bla', 1, 'targeted');
+
+        $this->client->campaigns->removeElement('bla', 1, 'targeted');
     }
 
     /**
@@ -109,6 +159,8 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_campaigns_methods_with_invalid_element_type4()
     {
         $this->client->api('campaigns')->removeAllElements('bla', 1, 'targeted');
+
+        $this->client->campaigns->removeAllElements('bla', 1, 'targeted');
     }
 
     /**
@@ -117,6 +169,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_login_methods()
     {
         $res = $this->client->api('login')->getToken('aaa', 'bbb');
+        $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
+
+        $res = $this->client->login->getToken('aaa', 'bbb');
         $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
     }
 
@@ -145,6 +200,27 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->api('collections')->os();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections/operating-systems'));
+
+        $res = $this->client->collections->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections'));
+
+        $res = $this->client->collections->browsers();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections/browsers'));
+
+        $res = $this->client->collections->carriers();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections/carriers'));
+
+        $res = $this->client->collections->categories();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections/categories'));
+
+        $res = $this->client->collections->devices();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections/devices'));
+
+        $res = $this->client->collections->languages();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections/languages'));
+
+        $res = $this->client->collections->os();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections/operating-systems'));
     }
 
     /**
@@ -153,6 +229,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_payments_advertiser_methods()
     {
         $res = $this->client->api('payments_advertiser')->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'payments/advertiser'));
+
+        $res = $this->client->payments_advertiser->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'payments/advertiser'));
     }
 
@@ -163,6 +242,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     {
         $res = $this->client->api('payments_publisher')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'payments/publisher'));
+
+        $res = $this->client->payments_publisher->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'payments/publisher'));
     }
 
     /**
@@ -171,6 +253,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_sites_methods()
     {
         $res = $this->client->api('sites')->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'sites'));
+
+        $res = $this->client->sites->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'sites'));
     }
 
@@ -211,6 +296,39 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->api('statistics_advertiser')->variation();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/variation'));
+
+        $res = $this->client->statistics_advertiser->browser();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/browser'));
+
+        $res = $this->client->statistics_advertiser->carrier();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/carrier'));
+
+        $res = $this->client->statistics_advertiser->category();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/category'));
+
+        $res = $this->client->statistics_advertiser->country();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/country'));
+
+        $res = $this->client->statistics_advertiser->date();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/date'));
+
+        $res = $this->client->statistics_advertiser->device();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/device'));
+
+        $res = $this->client->statistics_advertiser->hour();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/hour'));
+
+        $res = $this->client->statistics_advertiser->os();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/os'));
+
+        $res = $this->client->statistics_advertiser->site();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/site'));
+
+        $res = $this->client->statistics_advertiser->language();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/language'));
+
+        $res = $this->client->statistics_advertiser->variation();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/variation'));
     }
 
     /**
@@ -250,6 +368,39 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->api('statistics_publisher')->zone();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/zone'));
+
+        $res = $this->client->statistics_publisher->browser();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/browser'));
+
+        $res = $this->client->statistics_publisher->carrier();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/carrier'));
+
+        $res = $this->client->statistics_publisher->category();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/category'));
+
+        $res = $this->client->statistics_publisher->country();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/country'));
+
+        $res = $this->client->statistics_publisher->date();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/date'));
+
+        $res = $this->client->statistics_publisher->device();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/device'));
+
+        $res = $this->client->statistics_publisher->hour();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/hour'));
+
+        $res = $this->client->statistics_publisher->os();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/os'));
+
+        $res = $this->client->statistics_publisher->site();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/site'));
+
+        $res = $this->client->statistics_publisher->sub();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/sub'));
+
+        $res = $this->client->statistics_publisher->zone();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/zone'));
     }
 
     /**
@@ -268,6 +419,18 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->api('user')->resetpassword('asdf@asdf.com', 'asdf');
         $this->assertEquals($res, array('method' => 'POST', 'path' => 'user/resetpassword'));
+
+        $res = $this->client->user->show();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'user'));
+
+        $res = $this->client->user->update(array('asdf' => 'asdf'));
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'user'));
+
+        $res = $this->client->user->changepassword('asdf', 'asdf');
+        $this->assertEquals($res, array('method' => 'POST', 'path' => 'user/changepassword'));
+
+        $res = $this->client->user->resetpassword('asdf@asdf.com', 'asdf');
+        $this->assertEquals($res, array('method' => 'POST', 'path' => 'user/resetpassword'));
     }
 
     /**
@@ -277,6 +440,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     {
         $res = $this->client->api('zones')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'zones'));
+
+        $res = $this->client->zones->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'zones'));
     }
 
     /**
@@ -285,6 +451,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_get_parameters_presence()
     {
         $res = $this->client->api('campaigns')->all(array('offset' => 100));
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));
+
+        $res = $this->client->campaigns->all(array('offset' => 100));
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));
     }
 }
