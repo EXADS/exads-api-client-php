@@ -392,7 +392,7 @@ class Client
             case 'PUT':
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
                 if (isset($data)) {
-                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
                 }
                 break;
             case 'DELETE':
