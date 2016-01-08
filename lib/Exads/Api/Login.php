@@ -17,21 +17,15 @@ class Login extends AbstractApi
      */
     public function getToken($usernameOrApiToken, $password = null)
     {
+        $data = array(
+            'api_token' => $usernameOrApiToken
+        );
 
-        if(is_null($password) || empty($password))
-        {
-
-            $data = array(
-                'api_token' => $usernameOrApiToken
-            );
-
-        } else {
-
+        if (null !== $password) {
             $data = array(
                 'username' => $usernameOrApiToken,
-                'password' => $password,
+                'password' => $password
             );
-
         }
 
         return $this->post($this->getPath(), $data);
