@@ -82,29 +82,16 @@ require_once 'vendor/autoload.php';
 
 try {
     $client = new Exads\Client('https://api.exads.com/url/');
-    $apiToken = $client->login->getToken('username', 'password');
-    $client->setApiToken($apiToken);
 
-    // ...
-    $campaigns = $client->campaigns->all();
-    // ...
-} catch (\Exception $e) {
-    die($e->getMessage());
-}
-```
+    //There are two authentication methods:
 
-## Basic usage of `exads-api-client-php` client with API token authentication
+    //a. with username and password
+    $sessionToken = $client->login->getToken('username', 'password');
 
+    //b. with APItoken
+    //$sessionToken = $client->login->getToken('APItoken');
 
-```php
-<?php
-
-require_once 'vendor/autoload.php';
-
-try {
-    $client = new Exads\Client('https://api.exads.com/url/');
-    $apiToken = $client->login->getToken('APItoken');
-    $client->setApiToken($apiToken);
+    $client->setApiToken($sessionToken);
 
     // ...
     $campaigns = $client->campaigns->all();
