@@ -57,9 +57,9 @@ See the latest version available : https://github.com/EXADS/exads-api-client-php
 
 ```bash
 $ mkdir vendor
-$ wget -q https://github.com/EXADS/exads-api-client-php/archive/v1.1.1.tar.gz
-$ tar -xf v1.1.1.tar.gz -C vendor/
-$ rm v1.1.1.tar.gz
+$ wget -q https://github.com/EXADS/exads-api-client-php/archive/v1.2.0.tar.gz
+$ tar -xf v1.2.0.tar.gz -C vendor/
+$ rm v1.2.0.tar.gz
 ```
 
 Then your bootstrap script should look like :
@@ -83,16 +83,13 @@ require_once 'vendor/autoload.php';
 try {
     $client = new Exads\Client('https://api.exads.com/url/');
 
-    //There are two authentication methods:
-
-    //a. with username and password
+    // There are two authentication methods:
+    // a. with username and password
     $sessionToken = $client->login->getToken('username', 'password');
-
-    //b. with APItoken
-    //$sessionToken = $client->login->getToken('APItoken');
+    // b. with APItoken
+    // $sessionToken = $client->login->getToken('APItoken');
 
     $client->setApiToken($sessionToken);
-
     // ...
     $campaigns = $client->campaigns->all();
     // ...
