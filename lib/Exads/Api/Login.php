@@ -10,17 +10,23 @@ class Login extends AbstractApi
     protected $apiGroup = 'login';
 
     /**
-     * @param string $username
+     * @param string $usernameOrApiToken
      * @param string $password
      *
      * @return string
      */
-    public function getToken($username, $password)
+    public function getToken($usernameOrApiToken, $password = null)
     {
         $data = array(
-            'username' => $username,
-            'password' => $password,
+            'api_token' => $usernameOrApiToken
         );
+
+        if (null !== $password) {
+            $data = array(
+                'username' => $usernameOrApiToken,
+                'password' => $password
+            );
+        }
 
         return $this->post($this->getPath(), $data);
     }
