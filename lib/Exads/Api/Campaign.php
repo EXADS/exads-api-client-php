@@ -157,7 +157,7 @@ class Campaign extends AbstractApi
 
     /*
      * Remove targeted/blocked element from a campaign
-     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|site|keywords|ip_ranges]
+     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites|keywords|ip_ranges]
      * @param string $id
      * @param string $type [targeted|blocked]
      * @param array $data
