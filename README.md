@@ -93,6 +93,27 @@ try {
 }
 ```
 
+## Basic usage of `exads-api-client-php` client with API token authentication
+
+
+```php
+<?php
+
+require_once 'vendor/autoload.php';
+
+try {
+    $client = new Exads\Client('https://api.exads.com/url/');
+    $apiToken = $client->login->getToken('APItoken');
+    $client->setApiToken($apiToken);
+
+    // ...
+    $campaigns = $client->campaigns->all();
+    // ...
+} catch (\Exception $e) {
+    die($e->getMessage());
+}
+```
+
 See `test/Exads/Tests/UrlsTest.php` for a full list of available methods.
 
 #### Passing parameters to end points
