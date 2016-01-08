@@ -125,7 +125,7 @@ class Campaign extends AbstractApi
 
     /*
      * Add new targeted/blocked element to a campaign
-     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites]
+     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites|keywords|ip_ranges]
      * @param string $id
      * @param string $type [targeted|blocked]
      * @param array $data
@@ -141,7 +141,7 @@ class Campaign extends AbstractApi
 
     /*
      * Replace targeted/blocked element from a campaign
-     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites]
+     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites|keywords|ip_ranges]
      * @param string $id
      * @param string $type [targeted|blocked]
      * @param array $data
@@ -157,7 +157,7 @@ class Campaign extends AbstractApi
 
     /*
      * Remove targeted/blocked element from a campaign
-     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites]
+     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|site|keywords|ip_ranges]
      * @param string $id
      * @param string $type [targeted|blocked]
      * @param array $data
@@ -173,7 +173,7 @@ class Campaign extends AbstractApi
 
     /*
      * Remove all targeted/blocked elements from a campaign
-     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites]/all
+     * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites|keywords|ip_ranges]/all
      * @param string $id
      * @param string $type [targeted|blocked]
      *
@@ -251,6 +251,8 @@ class Campaign extends AbstractApi
             'languages',
             'operating_systems',
             'sites',
+            'keywords',
+            'ip_ranges',
         );
 
         // validate elementType
