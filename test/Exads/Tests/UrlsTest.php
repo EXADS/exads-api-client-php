@@ -173,6 +173,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->login->getToken('aaa', 'bbb');
         $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
+
+        $res = $this->client->login->getTokenByApiToken('816b89dde03da668d50bc2fe4f74c07407570732');
+        $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
     }
 
     /**

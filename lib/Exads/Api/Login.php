@@ -24,4 +24,18 @@ class Login extends AbstractApi
 
         return $this->post($this->getPath(), $data);
     }
+
+    /**
+     * @param string $api_token
+     *
+     * @return string
+     */
+    public function getTokenByApiToken($api_token)
+    {
+        $data = array(
+            'api_token' => $api_token
+        );
+
+        return $this->post($this->getPath(), $data);
+    }
 }
