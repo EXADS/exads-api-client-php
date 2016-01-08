@@ -116,6 +116,8 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
             array('languages'),
             array('operating_systems'),
             array('sites'),
+            array('keywords'),
+            array('ip_ranges'),
         );
     }
 
@@ -174,7 +176,10 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->login->getToken('aaa', 'bbb');
         $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
 
-        $res = $this->client->login->getTokenByApiToken('aaa');
+        $res = $this->client->api('login')->getToken('aaa');
+        $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
+
+        $res = $this->client->login->getToken('aaa');
         $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
     }
 
@@ -260,6 +265,30 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->sites->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'sites'));
+    }
+
+    /**
+     * @test
+     */
+    public function test_keywords_methods()
+    {
+        $res = $this->client->api('keywords')->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'keywords'));
+
+        $res = $this->client->keywords->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'keywords'));
+    }
+
+    /**
+     * @test
+     */
+    public function test_ip_ranges_methods()
+    {
+        $res = $this->client->api('ip_ranges')->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'ip_ranges'));
+
+        $res = $this->client->ip_ranges->all();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'ip_ranges'));
     }
 
     /**
