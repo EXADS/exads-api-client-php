@@ -28,14 +28,4 @@ class StatisticsAdvertiser extends AbstractStatistics
     {
         return $this->get($this->getPath('variation'), $params);
     }
-    
-    /**
-     * @param array $params
-     *
-     * @return array
-     */
-    public function date(array $params = array())
-    {
-        return $this->get($this->getPath('date'), $params);
-    }
 }
