@@ -30,6 +30,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('campaigns')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
 
+        $res = $this->client->api('campaigns')->groups();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns/groups'));
+
         $res = $this->client->api('campaigns')->show(1);
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns/1'));
 
@@ -265,30 +268,6 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->sites->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'sites'));
-    }
-
-    /**
-     * @test
-     */
-    public function test_keywords_methods()
-    {
-        $res = $this->client->api('keywords')->all();
-        $this->assertEquals($res, array('method' => 'GET', 'path' => 'keywords'));
-
-        $res = $this->client->keywords->all();
-        $this->assertEquals($res, array('method' => 'GET', 'path' => 'keywords'));
-    }
-
-    /**
-     * @test
-     */
-    public function test_ip_ranges_methods()
-    {
-        $res = $this->client->api('ip_ranges')->all();
-        $this->assertEquals($res, array('method' => 'GET', 'path' => 'ip_ranges'));
-
-        $res = $this->client->ip_ranges->all();
-        $this->assertEquals($res, array('method' => 'GET', 'path' => 'ip_ranges'));
     }
 
     /**
