@@ -24,6 +24,20 @@ class Campaign extends AbstractApi
     }
 
     /**
+     * Get campaign groups.
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function groups(array $params = array())
+    {
+        $path = $this->getPath('groups');
+
+        return $this->get($path, $params);
+    }
+
+    /**
      * Get campaign.
      *
      * @param string $id
@@ -200,6 +214,7 @@ class Campaign extends AbstractApi
         $pathMapping = array(
             'all' => '%s',
             'show' => '%s/%s',
+            'groups' => '%s/groups',
             'copy' => '%s/%s/copy',
             'delete' => '%s/%s/delete',
             'pause' => '%s/%s/pause',
