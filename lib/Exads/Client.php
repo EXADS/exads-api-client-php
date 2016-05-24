@@ -9,7 +9,7 @@ use Exads\Api\SimpleXMLElement;
  *
  * @link http://github.com/exads/php-exads-api
  */
-class Client
+class Client implements ClientInterface
 {
     /**
      * @var array
@@ -104,9 +104,9 @@ class Client
     /**
      * @param string $name
      *
-     * @return Api\AbstractApi
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return Api\AbstractApi
      */
     public function api($name)
     {
@@ -125,9 +125,9 @@ class Client
     /**
      * @param string $name
      *
-     * @return Api\AbstractApi
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return Api\AbstractApi
      */
     public function __get($name)
     {
@@ -191,6 +191,9 @@ class Client
      */
     public function decode($json)
     {
+        if ('' === $json) {
+            return '';
+        }
         $decoded = json_decode($json, true);
         if (null !== $decoded) {
             return $decoded;
@@ -355,9 +358,9 @@ class Client
      * @param string $method
      * @param string $data
      *
-     * @return bool|SimpleXMLElement|string
-     *
      * @throws \Exception If anything goes wrong on curl request
+     *
+     * @return bool|SimpleXMLElement|string
      */
     protected function runRequest($path, $method = 'GET', $data = '')
     {

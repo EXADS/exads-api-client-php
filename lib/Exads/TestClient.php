@@ -9,9 +9,9 @@ class TestClient extends Client
      * @param string $method
      * @param string $data
      *
-     * @return string
-     *
      * @throws \Exception always!
+     *
+     * @return string
      */
     protected function runRequest($path, $method = 'GET', $data = '')
     {

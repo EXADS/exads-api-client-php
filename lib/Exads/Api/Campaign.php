@@ -205,9 +205,9 @@ class Campaign extends AbstractApi
      * @param string $id
      * @param string $type     [targeted|blocked]
      *
-     * @return string
-     *
      * @throws InvalidArgumentException
+     *
+     * @return string
      */
     protected function getPath($endPoint = null, $id = null, $type = null)
     {
@@ -251,9 +251,9 @@ class Campaign extends AbstractApi
     /**
      * @param string $type
      *
-     * @return array
-     *
      * @throws InvalidArgumentException
+     *
+     * @return array
      */
     private function getElementTypes($type)
     {
@@ -275,7 +275,7 @@ class Campaign extends AbstractApi
         foreach ($tmp as $type) {
             $tmp[] = $type.'_all';
         }
-        if (!in_array($type, $tmp)) {
+        if (!in_array($type, $tmp, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
                     'Unknown element type "%s". Availabe types : %s',
