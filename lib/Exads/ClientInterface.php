@@ -7,9 +7,9 @@ interface ClientInterface
     /**
      * @param string $name
      *
-     * @return Api\AbstractApi
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return Api\AbstractApi
      */
     public function api($name);
 

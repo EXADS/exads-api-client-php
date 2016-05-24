@@ -46,7 +46,6 @@ abstract class AbstractApi
         return $this->client->put($path, $data);
     }
 
-
     /**
      * {@inheritdoc}
      */
