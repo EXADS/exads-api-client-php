@@ -3,6 +3,7 @@
 namespace Exads\Tests;
 
 use Exads\Client;
+use Exads\ClientInterface;
 use Exads\Exception\InvalidArgumentException;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
@@ -14,7 +15,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function should_instanciate_client_class()
     {
         $client = new Client('http://localhost');
-        $this->assertInstanceOf('Exads\Client', $client);
+        $this->assertInstanceOf(ClientInterface::class, $client);
     }
 
     /**
@@ -98,7 +99,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $invalidJson = '';
         $expectedError = '';
         $client = new Client('http://localhost');
-        $this->assertSame('', $client->decode(''));
+
+        $this->assertSame($expectedError, $client->decode($invalidJson));
     }
 
     /**
@@ -110,6 +112,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $invalidJson = '{"token":"34fb12b579a9e6bc7a28238db3ff79aed04827ab","type":"Bearer","expires_in":3600';
         $expectedError = 'Syntax error';
         $client = new Client('http://localhost');
+
+        $this->assertSame($expectedError, $client->decode($invalidJson));
+
+        $invalidJson = '{"token';
+        $expectedError = 'Control character error, possibly incorrectly encoded';
         $this->assertSame($expectedError, $client->decode($invalidJson));
     }
 

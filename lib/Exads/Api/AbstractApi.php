@@ -23,13 +23,7 @@ abstract class AbstractApi
     }
 
     /**
-     * Perform the client get() method.
-     *
-     * @param string $path
-     * @param array  $params
-     * @param bool   $decode
-     *
-     * @return array|string
+     * {@inheritdoc}
      */
     protected function get($path, array $params = array(), $decode = true)
     {
@@ -37,12 +31,7 @@ abstract class AbstractApi
     }
 
     /**
-     * Perform the client post() method.
-     *
-     * @param string $path
-     * @param array  $data
-     *
-     * @return string|false
+     * {@inheritdoc}
      */
     protected function post($path, $data = null)
     {
@@ -50,25 +39,16 @@ abstract class AbstractApi
     }
 
     /**
-     * Perform the client put() method.
-     *
-     * @param string $path
-     * @param array  $data
-     *
-     * @return string|false
+     * {@inheritdoc}
      */
     protected function put($path, $data = null)
     {
         return $this->client->put($path, $data);
     }
 
+
     /**
-     * Perform the client delete() method.
-     *
-     * @param string $path
-     * @param array  $data
-     *
-     * @return array
+     * {@inheritdoc}
      */
     protected function delete($path, $data = null)
     {

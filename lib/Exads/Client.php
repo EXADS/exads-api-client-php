@@ -9,7 +9,7 @@ use Exads\Api\SimpleXMLElement;
  *
  * @link http://github.com/exads/php-exads-api
  */
-class Client
+class Client implements ClientInterface
 {
     /**
      * @var array
@@ -191,6 +191,9 @@ class Client
      */
     public function decode($json)
     {
+        if ('' === $json) {
+            return '';
+        }
         $decoded = json_decode($json, true);
         if (null !== $decoded) {
             return $decoded;
