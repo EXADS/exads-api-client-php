@@ -95,6 +95,16 @@ abstract class AbstractStatistics extends AbstractApi
      *
      * @return array
      */
+    public function language(array $params = array())
+    {
+        return $this->get($this->getPath('language'), $params);
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
     public function site(array $params = array())
     {
         return $this->get($this->getPath('site'), $params);

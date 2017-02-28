@@ -14,16 +14,6 @@ class StatisticsAdvertiser extends AbstractStatistics
      *
      * @return array
      */
-    public function language(array $params = array())
-    {
-        return $this->get($this->getPath('language'), $params);
-    }
-
-    /**
-     * @param array $params
-     *
-     * @return array
-     */
     public function variation(array $params = array())
     {
         return $this->get($this->getPath('variation'), $params);
