@@ -68,6 +68,16 @@ class Campaign extends AbstractApi
     }
 
     /**
+     * @param array $data
+     */
+    public function create(array $data = [])
+    {
+        $path = $this->getPath('all');
+
+        return $this->post($path, $data);
+    }
+
+    /**
      * Copy a campaign.
      *
      * @param string $id
