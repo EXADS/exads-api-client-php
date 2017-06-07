@@ -94,57 +94,57 @@ class Campaign extends AbstractApi
     /**
      * Delete a campaign.
      *
-     * @param string $id
+     * @param   array   $data   array of campaign ids
      *
-     * @return bool
+     * @return  string          json response
      */
-    public function remove($id)
+    public function remove(array $data = [])
     {
-        $path = $this->getPath('delete', $id);
+        $path = $this->getPath('delete');
 
-        return $this->put($path);
+        return $this->put($path, $data);
     }
 
     /**
      * Pause a campaign.
      *
-     * @param string $id
+     * @param   array   $data   array of campaign ids
      *
-     * @return bool
+     * @return  string          json response
      */
-    public function pause($id)
+    public function pause(array $data = [])
     {
-        $path = $this->getPath('pause', $id);
+        $path = $this->getPath('pause');
 
-        return $this->put($path);
+        return $this->put($path, $data);
     }
 
     /**
-     * Play a campaign.
+     * Play a paused campaign.
      *
-     * @param string $id
+     * @param   array   $data   array of campaign ids
      *
-     * @return bool
+     * @return  string          json response
      */
-    public function play($id)
+    public function play(array $data = [])
     {
-        $path = $this->getPath('play', $id);
+        $path = $this->getPath('play');
 
-        return $this->put($path);
+        return $this->put($path, $data);
     }
 
     /**
-     * Restore a campaign.
+     * Restore a deleted campaign.
      *
-     * @param string $id
+     * @param   array   $data   array of campaign ids
      *
-     * @return bool
+     * @return  string          json response
      */
-    public function restore($id)
+    public function restore(array $data = [])
     {
-        $path = $this->getPath('restore', $id);
+        $path = $this->getPath('restore');
 
-        return $this->put($path);
+        return $this->put($path, $data);
     }
 
     /*
@@ -237,11 +237,11 @@ class Campaign extends AbstractApi
             'show' => '%s/%s',
             'groups' => '%s/groups',
             'copy' => '%s/%s/copy',
-            'delete' => '%s/%s/delete',
-            'pause' => '%s/%s/pause',
-            'play' => '%s/%s/play',
-            'restore' => '%s/%s/restore',
-            'create_variation' => '%s/%s/variation'
+            'create_variation' => '%s/%s/variation',
+            'delete' => '%s/delete',
+            'pause' => '%s/pause',
+            'play' => '%s/play',
+            'restore' => '%s/restore',
         );
 
         if (null !== $type) {
