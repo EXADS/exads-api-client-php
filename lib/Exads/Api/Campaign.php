@@ -62,7 +62,7 @@ class Campaign extends AbstractApi
      */
     public function update($id, array $data = array())
     {
-        $path = $this->getPath('all');
+        $path = $this->getPath('show', $id);
 
         return $this->put($path, $data);
     }
@@ -226,7 +226,7 @@ class Campaign extends AbstractApi
      * @param string $id
      * @param string $type     [targeted|blocked]
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return string
      */
@@ -273,7 +273,7 @@ class Campaign extends AbstractApi
     /**
      * @param string $type
      *
-     * @throws InvalidArgumentException
+     * @throws \InvalidArgumentException
      *
      * @return array
      */
