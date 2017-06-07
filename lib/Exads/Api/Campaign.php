@@ -200,6 +200,17 @@ class Campaign extends AbstractApi
         return $this->delete($path);
     }
 
+    public function createVariation($campaignid, array $data = [])
+    {
+        $headers = [
+            'Content-Type' => 'multipart/form-data'
+        ];
+
+        $path = $this->getPath('create_variation', $campaignid);
+
+        return $this->post($path, $data, $headers);
+    }
+
     /**
      * @param string $endPoint
      * @param string $id
@@ -220,6 +231,7 @@ class Campaign extends AbstractApi
             'pause' => '%s/%s/pause',
             'play' => '%s/%s/play',
             'restore' => '%s/%s/restore',
+            'create_variation' => '%s/%s/variation'
         );
 
         if (null !== $type) {

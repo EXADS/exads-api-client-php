@@ -33,9 +33,9 @@ abstract class AbstractApi
     /**
      * {@inheritdoc}
      */
-    protected function post($path, $data = null)
+    protected function post($path, $data = null, array $headers = [])
     {
-        return $this->client->post($path, $data);
+        return $this->client->post($path, $data, $headers);
     }
 
     /**

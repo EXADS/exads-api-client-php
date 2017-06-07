@@ -210,14 +210,17 @@ class Client implements ClientInterface
      *
      * @param string $path
      * @param mixed  $data
+     * @param array  $headers
      *
      * @return mixed
      */
-    public function post($path, $data = null)
+    public function post($path, $data = null, $headers = [])
     {
-        $data = $this->encodeData($data);
+        if ( empty($headers['Content-Type']) || $headers['Content-Type'] == 'application/json' ) {
+            $data = $this->encodeData($data);
+        }
 
-        return $this->runRequest($path, 'POST', $data);
+        return $this->runRequest($path, 'POST', $data, $headers);
     }
 
     /**
@@ -357,12 +360,13 @@ class Client implements ClientInterface
      * @param string $path
      * @param string $method
      * @param string $data
+     * @param array $headers
      *
      * @throws \Exception If anything goes wrong on curl request
      *
      * @return bool|SimpleXMLElement|string
      */
-    protected function runRequest($path, $method = 'GET', $data = '')
+    protected function runRequest($path, $method = 'GET', $data = '', $headers = [])
     {
         $this->responseCode = null;
 
@@ -379,8 +383,21 @@ class Client implements ClientInterface
 
         $requestHeader = array(
             'Expect:',
-            'Content-Type: application/json',
+            'Content-Type: application/json'
         );
+
+        if ( ! empty($headers) ) {
+            foreach ($headers as $key => $value) {
+                $existingKey = $this->array_match(sprintf("%s", $key), $requestHeader);
+                $valueStr = sprintf("%s: %s", $key, $value);
+                if ( $existingKey !== false ) {
+                    $requestHeader[$existingKey] = $valueStr;
+                } else {
+                    $requestHeader[] = $valueStr;
+                }
+            }
+        }
+
         if (null !== $this->apiToken) {
             $requestHeader[] = sprintf('Authorization: %s', $this->apiToken);
         }
@@ -484,5 +501,25 @@ class Client implements ClientInterface
             'headers' => $headers,
             'body' => $body,
         );
+    }
+
+    /**
+     * @param $needle
+     * @param $haystack
+     * @return bool|int
+     */
+    public function array_match($needle, $haystack)
+    {
+        $i = 0;
+        $n = count($haystack);
+        $key = false;
+        do {
+            if ( strpos($haystack[$i], $needle) !== false ) {
+                $key = $i;
+            }
+            $i ++;
+        } while ( $key === false && $i < $n );
+
+        return $key;
     }
 }
