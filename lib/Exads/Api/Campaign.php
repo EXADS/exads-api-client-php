@@ -3,7 +3,7 @@
 namespace Exads\Api;
 
 /**
- * @link   https://api.exads.com/v1/docs/index.html#!/campaigns
+ * @link   https://api.exads.com/v2/docs/index.html#!/campaigns
  */
 class Campaign extends AbstractApi
 {

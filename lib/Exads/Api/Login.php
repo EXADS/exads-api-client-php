@@ -3,7 +3,7 @@
 namespace Exads\Api;
 
 /**
- * @link  https://api.exads.com/v1/docs/index.html#!/login
+ * @link  https://api.exads.com/v2/docs/index.html#!/login
  */
 class Login extends AbstractApi
 {
