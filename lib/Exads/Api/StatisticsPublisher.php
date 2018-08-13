@@ -3,7 +3,7 @@
 namespace Exads\Api;
 
 /**
- * @link   https://api.exads.com/v1/docs/index.html#!/statistics
+ * @link   https://api.exads.com/v2/docs/index.html#!/statistics
  */
 class StatisticsPublisher extends AbstractStatistics
 {
