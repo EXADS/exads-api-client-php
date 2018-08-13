@@ -58,9 +58,9 @@ See the latest version available : https://github.com/EXADS/exads-api-client-php
 
 ```bash
 $ mkdir vendor
-$ wget -q https://github.com/EXADS/exads-api-client-php/archive/v1.2.2.tar.gz
-$ tar -xf v1.2.2.tar.gz -C vendor/
-$ rm v1.2.2.tar.gz
+$ wget -q https://github.com/EXADS/exads-api-client-php/archive/v1.3.0.tar.gz
+$ tar -xf v1.3.0.tar.gz -C vendor/
+$ rm v1.3.0.tar.gz
 ```
 
 Then your bootstrap script should look like :
