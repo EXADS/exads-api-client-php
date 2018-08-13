@@ -110,6 +110,16 @@ abstract class AbstractStatistics extends AbstractApi
         return $this->get($this->getPath('site'), $params);
     }
 
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function zone(array $params = array())
+    {
+        return $this->get($this->getPath('zone'), $params);
+    }
+
     protected function getPath($endPoint = null)
     {
         return sprintf('%s/%s/%s', $this->apiGroup, $this->subGroup, $endPoint);
