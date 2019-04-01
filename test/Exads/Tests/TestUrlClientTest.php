@@ -7,7 +7,7 @@ use Exads\TestUrlClient;
 class TestUrlClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Exads\TestUrlClient
+     * @covers \Exads\TestUrlClient
      * @test
      */
     public function test_get_returns_path_and_method()
@@ -18,7 +18,7 @@ class TestUrlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\TestUrlClient
+     * @covers \Exads\TestUrlClient
      * @test
      */
     public function test_delete_returns_path_and_method()
@@ -29,7 +29,7 @@ class TestUrlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\TestUrlClient
+     * @covers \Exads\TestUrlClient
      * @test
      */
     public function test_post_returns_path_and_method()
@@ -43,7 +43,7 @@ class TestUrlClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\TestUrlClient
+     * @covers \Exads\TestUrlClient
      * @test
      */
     public function test_put_returns_path_and_method()

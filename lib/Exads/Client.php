@@ -8,6 +8,17 @@ use Exads\Api\SimpleXMLElement;
  * Simple PHP Exads client.
  *
  * @link http://github.com/exads/php-exads-api
+ *
+ * @property-read Api\Campaign $campaigns
+ * @property-read Api\Login $login
+ * @property-read Api\Collection $collections
+ * @property-read Api\PaymentAdvertiser $payments_advertiser
+ * @property-read Api\PaymentPublisher $payments_publisher
+ * @property-read Api\Site $sites
+ * @property-read Api\StatisticsAdvertiser $statistics_advertiser
+ * @property-read Api\StatisticsPublisher $statistics_publisher
+ * @property-read Api\User $user
+ * @property-read Api\Zone $zones
  */
 class Client implements ClientInterface
 {
@@ -161,7 +172,7 @@ class Client implements ClientInterface
      * @param array  $params
      * @param bool   $decode
      *
-     * @return array
+     * @return array|string
      */
     public function get($path, array $params = array(), $decode = true)
     {
@@ -212,7 +223,7 @@ class Client implements ClientInterface
      * @param mixed  $data
      * @param array  $headers
      *
-     * @return mixed
+     * @return bool|string
      */
     public function post($path, $data = null, $headers = [])
     {
@@ -229,7 +240,7 @@ class Client implements ClientInterface
      * @param string $path
      * @param mixed  $data
      *
-     * @return array
+     * @return bool|string
      */
     public function put($path, $data = null)
     {
@@ -244,7 +255,7 @@ class Client implements ClientInterface
      * @param string $path
      * @param mixed  $data
      *
-     * @return array
+     * @return bool|string
      */
     public function delete($path, $data = null)
     {
@@ -359,12 +370,12 @@ class Client implements ClientInterface
     /**
      * @param string $path
      * @param string $method
-     * @param string $data
+     * @param string|array $data
      * @param array $headers
      *
      * @throws \Exception If anything goes wrong on curl request
      *
-     * @return bool|SimpleXMLElement|string
+     * @return bool|string
      */
     protected function runRequest($path, $method = 'GET', $data = '', $headers = [])
     {
