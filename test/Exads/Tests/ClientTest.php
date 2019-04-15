@@ -4,12 +4,12 @@ namespace Exads\Tests;
 
 use Exads\Client;
 use Exads\ClientInterface;
-use Exads\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      */
     public function should_instanciate_client_class()
@@ -19,7 +19,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      * @expectedException InvalidArgumentException
      */
@@ -30,7 +30,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      */
     public function should_return_api_url()
@@ -40,7 +40,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      */
     public function should_find_correct_port()
@@ -53,7 +53,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      */
     public function should_update_port()
@@ -64,7 +64,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      */
     public function response_should_be_0_by_default()
@@ -74,7 +74,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      */
     public function should_decode_valid_json()
@@ -91,7 +91,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      */
     public function test_empty_json_decode()
@@ -104,7 +104,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      */
     public function test_malformed_json_should_return_error()
@@ -121,7 +121,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\Client
+     * @covers \Exads\Client
      * @test
      * @dataProvider getApiClassesProvider
      */

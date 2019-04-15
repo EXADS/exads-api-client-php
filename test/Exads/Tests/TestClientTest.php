@@ -3,11 +3,12 @@
 namespace Exads\Tests;
 
 use Exads\TestClient;
+use Exception;
 
 class TestClientTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Exads\TestClient
+     * @covers \Exads\TestClient
      * @test
      * @expectedException Exception
      */
@@ -18,7 +19,7 @@ class TestClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\TestClient
+     * @covers \Exads\TestClient
      * @test
      * @expectedException Exception
      */
@@ -29,18 +30,18 @@ class TestClientTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Exads\TestClient
+     * @covers \Exads\TestClient
      * @test
      * @expectedException Exception
      */
     public function test_post_method_not_available()
     {
         $client = new TestClient('http://localhost');
-        $res = $client->post('does_not_exist', 'POST method not available');
+        $client->post('does_not_exist', 'POST method not available');
     }
 
     /**
-     * @covers Exads\TestClient
+     * @covers \Exads\TestClient
      * @test
      * @expectedException Exception
      */

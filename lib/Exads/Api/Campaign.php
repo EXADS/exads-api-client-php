@@ -147,8 +147,9 @@ class Campaign extends AbstractApi
         return $this->put($path, $data);
     }
 
-    /*
-     * Add new targeted/blocked element to a campaign
+    /**
+     * Add new targeted/blocked element to a campaign.
+     *
      * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites|keywords|ip_ranges]
      * @param string $id
      * @param string $type [targeted|blocked]
@@ -163,14 +164,15 @@ class Campaign extends AbstractApi
         return $this->post($path, $data);
     }
 
-    /*
-     * Replace targeted/blocked element from a campaign
+    /**
+     * Replace targeted/blocked element from a campaign.
+     *
      * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites|keywords|ip_ranges]
      * @param string $id
      * @param string $type [targeted|blocked]
      * @param array $data
      *
-     * @return array
+     * @return boolean
      */
     public function replaceElement($elementType, $id, $type, array $data = array())
     {
@@ -179,8 +181,9 @@ class Campaign extends AbstractApi
         return $this->put($path, $data);
     }
 
-    /*
-     * Remove targeted/blocked element from a campaign
+    /**
+     * Remove targeted/blocked element from a campaign.
+     *
      * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites|keywords|ip_ranges]
      * @param string $id
      * @param string $type [targeted|blocked]
@@ -195,8 +198,9 @@ class Campaign extends AbstractApi
         return $this->delete($path, $data);
     }
 
-    /*
-     * Remove all targeted/blocked elements from a campaign
+    /**
+     * Remove all targeted/blocked elements from a campaign.
+     *
      * @param string $elementType [browsers|carriers|categories|countries|devices|languages|operating_systems|sites|keywords|ip_ranges]/all
      * @param string $id
      * @param string $type [targeted|blocked]

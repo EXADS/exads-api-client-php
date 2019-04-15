@@ -6,6 +6,7 @@ use Exads\TestUrlClient;
 
 class UrlsTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var TestUrlClient */
     private $client;
 
     public function setup()
@@ -39,17 +40,33 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('campaigns')->copy(1);
         $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/copy'));
 
-        $res = $this->client->api('campaigns')->remove(1);
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/delete'));
+        $res = $this->client->api('campaigns')->remove(array(1));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'campaigns/delete',
+            'data' => array(1),
+        ));
 
-        $res = $this->client->api('campaigns')->pause(1);
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/pause'));
+        $res = $this->client->api('campaigns')->pause(array(1));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'campaigns/pause',
+            'data' => array(1),
+        ));
 
-        $res = $this->client->api('campaigns')->play(1);
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/play'));
+        $res = $this->client->api('campaigns')->play(array(1));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'campaigns/play',
+            'data' => array(1),
+        ));
 
-        $res = $this->client->api('campaigns')->restore(1);
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/restore'));
+        $res = $this->client->api('campaigns')->restore(array(1));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'campaigns/restore',
+            'data' => array(1),
+        ));
 
         $res = $this->client->campaigns->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
@@ -60,17 +77,33 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->campaigns->copy(1);
         $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/copy'));
 
-        $res = $this->client->campaigns->remove(1);
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/delete'));
+        $res = $this->client->campaigns->remove(array(1, 2));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'campaigns/delete',
+            'data' => array(1, 2),
+        ));
 
-        $res = $this->client->campaigns->pause(1);
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/pause'));
+        $res = $this->client->campaigns->pause(array(1, 2));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'campaigns/pause',
+            'data' => array(1, 2),
+        ));
 
-        $res = $this->client->campaigns->play(1);
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/play'));
+        $res = $this->client->campaigns->play(array(1, 2));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'campaigns/play',
+            'data' => array(1, 2),
+        ));
 
-        $res = $this->client->campaigns->restore(1);
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/1/restore'));
+        $res = $this->client->campaigns->restore(array(1, 2));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'campaigns/restore',
+            'data' => array(1, 2),
+        ));
     }
 
     /**
@@ -174,16 +207,32 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function test_login_methods()
     {
         $res = $this->client->api('login')->getToken('aaa', 'bbb');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
+        $this->assertEquals($res, array(
+            'method' => 'POST',
+            'path' => 'login',
+            'data' => array('username' => 'aaa', 'password' => 'bbb'),
+        ));
 
         $res = $this->client->login->getToken('aaa', 'bbb');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
+        $this->assertEquals($res, array(
+            'method' => 'POST',
+            'path' => 'login',
+            'data' => array('username' => 'aaa', 'password' => 'bbb'),
+        ));
 
         $res = $this->client->api('login')->getToken('aaa');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
+        $this->assertEquals($res, array(
+            'method' => 'POST',
+            'path' => 'login',
+            'data' => array('api_token' => 'aaa'),
+        ));
 
         $res = $this->client->login->getToken('aaa');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'login'));
+        $this->assertEquals($res, array(
+            'method' => 'POST',
+            'path' => 'login',
+            'data' => array('api_token' => 'aaa'),
+        ));
     }
 
     /**
@@ -278,6 +327,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('statistics_advertiser')->browser();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/browser'));
 
+        $res = $this->client->api('statistics_advertiser')->campaign();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/campaign'));
+
         $res = $this->client->api('statistics_advertiser')->carrier();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/carrier'));
 
@@ -310,6 +362,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->statistics_advertiser->browser();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/browser'));
+
+        $res = $this->client->statistics_advertiser->campaign();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/campaign'));
 
         $res = $this->client->statistics_advertiser->carrier();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/carrier'));
@@ -425,26 +480,50 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('user')->show();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'user'));
 
-        $res = $this->client->api('user')->update(array('asdf' => 'asdf'));
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'user'));
+        $res = $this->client->api('user')->update(array('firstname' => 'asdf'));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'user',
+            'data' => array('firstname' => 'asdf'),
+        ));
 
-        $res = $this->client->api('user')->changepassword('asdf', 'asdf');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'user/changepassword'));
+        $res = $this->client->api('user')->changepassword('asdf', 'asdf_new');
+        $this->assertEquals($res, array(
+            'method' => 'POST',
+            'path' => 'user/changepassword',
+            'data' => array('password' => 'asdf', 'new_password' => 'asdf_new'),
+        ));
 
         $res = $this->client->api('user')->resetpassword('asdf@asdf.com', 'asdf');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'user/resetpassword'));
+        $this->assertEquals($res, array(
+            'method' => 'POST',
+            'path' => 'user/resetpassword',
+            'data' => array('email' => 'asdf@asdf.com', 'username' => 'asdf', 'token' => null),
+        ));
 
         $res = $this->client->user->show();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'user'));
 
-        $res = $this->client->user->update(array('asdf' => 'asdf'));
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'user'));
+        $res = $this->client->user->update(array('firstname' => 'asdf'));
+        $this->assertEquals($res, array(
+            'method' => 'PUT',
+            'path' => 'user',
+            'data' => array('firstname' => 'asdf'),
+        ));
 
-        $res = $this->client->user->changepassword('asdf', 'asdf');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'user/changepassword'));
+        $res = $this->client->user->changepassword('asdf', 'asdf_new');
+        $this->assertEquals($res, array(
+            'method' => 'POST',
+            'path' => 'user/changepassword',
+            'data' => array('password' => 'asdf', 'new_password' => 'asdf_new'),
+        ));
 
         $res = $this->client->user->resetpassword('asdf@asdf.com', 'asdf');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'user/resetpassword'));
+        $this->assertEquals($res, array(
+            'method' => 'POST',
+            'path' => 'user/resetpassword',
+            'data' => array('email' => 'asdf@asdf.com', 'username' => 'asdf', 'token' => null),
+        ));
     }
 
     /**
