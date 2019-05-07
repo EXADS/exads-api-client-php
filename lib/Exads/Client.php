@@ -427,7 +427,6 @@ class Client implements ClientInterface
                 }
                 break;
             case 'DELETE':
-                curl_setopt($curl, CURLOPT_HEADER, false);
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
                 if (isset($data)) {
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
