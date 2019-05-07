@@ -6,7 +6,7 @@ See Exads API's documentation.
 
 ## Features
 
-* Follows PSR-0 conventions and coding standard: autoload friendly
+* Follows PSR-2 conventions and coding standard: autoload friendly
 * API entry points implementation state :
  * Campaign
  * Collection

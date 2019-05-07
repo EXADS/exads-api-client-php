@@ -227,7 +227,7 @@ class Client implements ClientInterface
      */
     public function post($path, $data = null, $headers = [])
     {
-        if ( empty($headers['Content-Type']) || $headers['Content-Type'] == 'application/json' ) {
+        if (empty($headers['Content-Type']) || $headers['Content-Type'] == 'application/json') {
             $data = $this->encodeData($data);
         }
 
@@ -397,11 +397,11 @@ class Client implements ClientInterface
             'Content-Type: application/json'
         );
 
-        if ( ! empty($headers) ) {
+        if (! empty($headers)) {
             foreach ($headers as $key => $value) {
-                $existingKey = $this->array_match(sprintf("%s", $key), $requestHeader);
+                $existingKey = $this->arrayMatch(sprintf("%s", $key), $requestHeader);
                 $valueStr = sprintf("%s: %s", $key, $value);
-                if ( $existingKey !== false ) {
+                if ($existingKey !== false) {
                     $requestHeader[$existingKey] = $valueStr;
                 } else {
                     $requestHeader[] = $valueStr;
@@ -518,17 +518,17 @@ class Client implements ClientInterface
      * @param $haystack
      * @return bool|int
      */
-    public function array_match($needle, $haystack)
+    public function arrayMatch($needle, $haystack)
     {
         $i = 0;
         $n = count($haystack);
         $key = false;
         do {
-            if ( strpos($haystack[$i], $needle) !== false ) {
+            if (strpos($haystack[$i], $needle) !== false) {
                 $key = $i;
             }
             $i ++;
-        } while ( $key === false && $i < $n );
+        } while ($key === false && $i < $n);
 
         return $key;
     }
