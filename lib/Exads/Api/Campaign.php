@@ -304,7 +304,7 @@ class Campaign extends AbstractApi
         if (!in_array($type, $tmp, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Unknown element type "%s". Availabe types : %s',
+                    'Unknown element type "%s". Available types : %s',
                     $type,
                     implode(', ', $elementTypes)
                 )
