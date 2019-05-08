@@ -12,7 +12,7 @@ class TestClientTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Exception
      */
-    public function test_get_method_not_available()
+    public function testGetMethodNotAvailable()
     {
         $client = new TestClient('http://localhost');
         $client->get('does_not_exist');
@@ -23,7 +23,7 @@ class TestClientTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Exception
      */
-    public function test_delete_method_not_available()
+    public function testDeleteMethodNotAvailable()
     {
         $client = new TestClient('http://localhost');
         $client->delete('does_not_exist');
@@ -34,7 +34,7 @@ class TestClientTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Exception
      */
-    public function test_post_method_not_available()
+    public function testPostMethodNotAvailable()
     {
         $client = new TestClient('http://localhost');
         $client->post('does_not_exist', 'POST method not available');
@@ -45,7 +45,7 @@ class TestClientTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException Exception
      */
-    public function test_put_method_not_available()
+    public function testPutMethodNotAvailable()
     {
         $client = new TestClient('http://localhost');
         $client->put('does_not_exist', 'PUT method not available');

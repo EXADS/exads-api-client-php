@@ -18,7 +18,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_invalid_api_name()
+    public function testInvalidApiName()
     {
         $this->client->bla;
     }
@@ -26,7 +26,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_campaigns_methods()
+    public function testCampaignsMethods()
     {
         $res = $this->client->api('campaigns')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
@@ -110,7 +110,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider getValidElementTypes
      */
-    public function test_campaigns_methods_with_element_type($elementType)
+    public function testCampaignsMethodsWithElementType($elementType)
     {
         $res = $this->client->api('campaigns')->addElement($elementType, 1, 'targeted');
         $this->assertEquals($res, array('method' => 'POST', 'path' => 'campaigns/1/targeted/'.$elementType));
@@ -161,7 +161,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_campaigns_methods_with_invalid_element_type()
+    public function testCampaignsMethodsWithInvalidElementType()
     {
         $this->client->api('campaigns')->addElement('bla', 1, 'targeted');
 
@@ -172,7 +172,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_campaigns_methods_with_invalid_element_type2()
+    public function testCampaignsMethodsWithInvalidElementType2()
     {
         $this->client->api('campaigns')->replaceElement('bla', 1, 'blocked');
 
@@ -183,7 +183,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_campaigns_methods_with_invalid_element_type3()
+    public function testCampaignsMethodsWithInvalidElementType3()
     {
         $this->client->api('campaigns')->removeElement('bla', 1, 'targeted');
 
@@ -194,7 +194,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_campaigns_methods_with_invalid_element_type4()
+    public function testCampaignsMethodsWithInvalidElementType4()
     {
         $this->client->api('campaigns')->removeAllElements('bla', 1, 'targeted');
 
@@ -204,7 +204,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_login_methods()
+    public function testLoginMethods()
     {
         $res = $this->client->api('login')->getToken('aaa', 'bbb');
         $this->assertEquals($res, array(
@@ -238,7 +238,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_collections_methods()
+    public function testCollectionsMethods()
     {
         $res = $this->client->api('collections')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections'));
@@ -286,7 +286,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_payments_advertiser_methods()
+    public function testPaymentsAdvertiserMethods()
     {
         $res = $this->client->api('payments_advertiser')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'payments/advertiser'));
@@ -298,7 +298,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_payments_publisher_methods()
+    public function testPaymentsPublisherMethods()
     {
         $res = $this->client->api('payments_publisher')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'payments/publisher'));
@@ -310,7 +310,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_sites_methods()
+    public function testSitesMethods()
     {
         $res = $this->client->api('sites')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'sites'));
@@ -322,7 +322,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_statistics_advertiser_methods()
+    public function testStatisticsAdvertiserMethods()
     {
         $res = $this->client->api('statistics_advertiser')->browser();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/browser'));
@@ -400,7 +400,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_statistics_publisher_methods()
+    public function testStatisticsPublisherMethods()
     {
         $res = $this->client->api('statistics_publisher')->browser();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/browser'));
@@ -475,7 +475,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_user_methods()
+    public function testUserMethods()
     {
         $res = $this->client->api('user')->show();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'user'));
@@ -529,7 +529,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_zone_methods()
+    public function testZoneMethods()
     {
         $res = $this->client->api('zones')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'zones'));
@@ -541,7 +541,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_get_parameters_presence()
+    public function testGetParametersPresence()
     {
         $res = $this->client->api('campaigns')->all(array('offset' => 100));
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));

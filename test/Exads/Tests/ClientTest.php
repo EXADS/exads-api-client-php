@@ -12,7 +12,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\Client
      * @test
      */
-    public function should_instanciate_client_class()
+    public function shouldInstanciateClientClass()
     {
         $client = new Client('http://localhost');
         $this->assertInstanceOf(ClientInterface::class, $client);
@@ -23,7 +23,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException InvalidArgumentException
      */
-    public function should_not_get_api_instance()
+    public function shouldNotGetApiInstance()
     {
         $client = new Client('http://localhost');
         $client->api('do_not_exist');
@@ -33,7 +33,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\Client
      * @test
      */
-    public function should_return_api_url()
+    public function shouldReturnAPIUrl()
     {
         $client = new Client('http://localhost');
         $this->assertSame('http://localhost', $client->getUrl());
@@ -43,7 +43,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\Client
      * @test
      */
-    public function should_find_correct_port()
+    public function shouldFindCorrectPort()
     {
         $client = new Client('http://localhost');
         $this->assertSame(80, $client->getPort());
@@ -56,7 +56,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\Client
      * @test
      */
-    public function should_update_port()
+    public function shouldUpdatePort()
     {
         $client = new Client('http://localhost');
         $this->assertSame($client, $client->setPort(28080));
@@ -67,7 +67,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\Client
      * @test
      */
-    public function response_should_be_0_by_default()
+    public function responseShouldBe0ByDefault()
     {
         $client = new Client('http://localhost');
         $this->assertEquals(0, $client->getResponseCode());
@@ -77,7 +77,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\Client
      * @test
      */
-    public function should_decode_valid_json()
+    public function shouldDecodeValidJson()
     {
         // Test values
         $inputJson = '{"token":"34fb12b579a9e6bc7a28238db3ff79aed04827ab","type":"Bearer","expires_in":3600}';
@@ -94,7 +94,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\Client
      * @test
      */
-    public function test_empty_json_decode()
+    public function testEmptyJsonDecode()
     {
         $invalidJson = '';
         $expectedError = '';
@@ -107,7 +107,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\Client
      * @test
      */
-    public function test_malformed_json_should_return_error()
+    public function testMalformedJsonShouldReturnError()
     {
         $invalidJson = '{"token":"34fb12b579a9e6bc7a28238db3ff79aed04827ab","type":"Bearer","expires_in":3600';
         $expectedError = 'Syntax error';
