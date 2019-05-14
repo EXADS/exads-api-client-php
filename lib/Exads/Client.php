@@ -19,6 +19,7 @@ use Exads\Api\SimpleXMLElement;
  * @property-read Api\StatisticsPublisher $statistics_publisher
  * @property-read Api\User $user
  * @property-read Api\Zone $zones
+ * @property-read Api\Offer $offers
  */
 class Client implements ClientInterface
 {
@@ -101,6 +102,7 @@ class Client implements ClientInterface
         'statistics_publisher' => 'StatisticsPublisher',
         'user' => 'User',
         'zones' => 'Zone',
+        'offers' => 'Offer',
     );
 
     /**

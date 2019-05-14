@@ -582,6 +582,23 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'zones'));
     }
 
+
+    /**
+     *
+     * @test
+     */
+    public function testOfferMethods()
+    {
+        $offer_all = array('method' => 'GET', 'path' => 'offers');
+
+
+        $res = $this->client->api('offers')->all();
+        $this->assertEquals($res, $offer_all);
+
+        $res = $this->client->offers->all();
+        $this->assertEquals($res, $offer_all);
+    }
+
     /**
      * @test
      */
