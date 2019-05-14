@@ -28,6 +28,10 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      */
     public function testCampaignsMethods()
     {
+        $create = array( 'method' => 'POST' , 'path' => 'campaigns' , 'data' => array(1) );
+        $update = array( 'method' => 'PUT' , 'path' => 'campaigns/2' , 'data' => array(3) );
+
+
         $res = $this->client->api('campaigns')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
 
@@ -68,6 +72,13 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
             'data' => array(1),
         ));
 
+        $res = $this->client->api('campaigns')->create(array(1));
+        $this->assertEquals($res, $create );
+
+        $res = $this->client->api('campaigns')->update(2, array(3));
+        $this->assertEquals($res, $update );
+
+
         $res = $this->client->campaigns->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
 
@@ -104,6 +115,12 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
             'path' => 'campaigns/restore',
             'data' => array(1, 2),
         ));
+
+        $res = $this->client->campaigns->create(array(1));
+        $this->assertEquals($res, $create);
+
+        $res = $this->client->campaigns->update(2 , array(3));
+        $this->assertEquals($res, $update);
     }
 
     /**
