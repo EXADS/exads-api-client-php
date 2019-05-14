@@ -164,19 +164,15 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function testCampaignsMethodsWithInvalidElementType()
     {
         $this->client->api('campaigns')->addElement('bla', 1, 'targeted');
-
-        $this->client->campaigns->addElement('bla', 1, 'targeted');
     }
 
     /**
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function testCampaignsMethodsWithInvalidElementType2()
+    public function testCampaignsMethodWithInvalidElmentType2()
     {
-        $this->client->api('campaigns')->replaceElement('bla', 1, 'blocked');
-
-        $this->client->campaigns->replaceElement('bla', 1, 'blocked');
+        $this->client->campaigns->addElement('bla', 1, 'targeted');
     }
 
     /**
@@ -185,8 +181,33 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      */
     public function testCampaignsMethodsWithInvalidElementType3()
     {
-        $this->client->api('campaigns')->removeElement('bla', 1, 'targeted');
+        $this->client->api('campaigns')->replaceElement('bla', 1, 'blocked');
+    }
 
+    /**
+      * @test
+      * @expectedException \InvalidArgumentException
+      */
+    public function testCampaignsMethodsWithInvalidElementType4()
+    {
+        $this->client->campaigns->replaceElement('bla', 1, 'blocked');
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCampaignsMethodsWithInvalidElementType5()
+    {
+        $this->client->api('campaigns')->removeElement('bla', 1, 'targeted');
+    }
+
+    /**
+      * @test
+      * @expectedException \InvalidArgumentException
+      */
+    public function testCampaignsMethodWithInvalidElementType6()
+    {
         $this->client->campaigns->removeElement('bla', 1, 'targeted');
     }
 
@@ -194,10 +215,17 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function testCampaignsMethodsWithInvalidElementType4()
+    public function testCampaignsMethodsWithInvalidElementType7()
     {
         $this->client->api('campaigns')->removeAllElements('bla', 1, 'targeted');
+    }
 
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCampaignsMethodsWithInvalidElementType8()
+    {
         $this->client->campaigns->removeAllElements('bla', 1, 'targeted');
     }
 
