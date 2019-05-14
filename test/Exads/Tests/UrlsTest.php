@@ -112,32 +112,38 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      */
     public function testCampaignsMethodsWithElementType($elementType)
     {
-        $res = $this->client->api('campaigns')->addElement($elementType, 1, 'targeted');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'campaigns/1/targeted/'.$elementType));
+        $this->CampaignsMethodsWithElementTypeTargetTest($elementType,'targeted');
+        $this->CampaignsMethodsWithElementTypeTargetTest($elementType,'blocked');
+    }
 
-        $res = $this->client->api('campaigns')->replaceElement($elementType, 2, 'blocked');
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/2/blocked/'.$elementType));
+    private function CampaignsMethodsWithElementTypeTargetTest($elementType,$targetType)
+    {
+        $res = $this->client->api('campaigns')->addElement($elementType, 1, $targetType);
+        $this->assertEquals($res, array('method' => 'POST', 'path' => "campaigns/1/$targetType/$elementType"));
 
-        $res = $this->client->api('campaigns')->removeElement($elementType, 3, 'targeted');
-        $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/3/targeted/'.$elementType));
+        $res = $this->client->api('campaigns')->replaceElement($elementType, 2, $targetType);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => "campaigns/2/$targetType/$elementType"));
+
+        $res = $this->client->api('campaigns')->removeElement($elementType, 3, $targetType);
+        $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/3/$targetType/$elementType"));
 
         if ('countries' !== $elementType) {
-            $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, 'targeted');
-            $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
+            $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, $targetType);
+            $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/4/$targetType/$elementType/all"));
         }
 
-        $res = $this->client->campaigns->addElement($elementType, 1, 'targeted');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'campaigns/1/targeted/'.$elementType));
+        $res = $this->client->campaigns->addElement($elementType, 1, $targetType);
+        $this->assertEquals($res, array('method' => 'POST', 'path' => "campaigns/1/$targetType/$elementType"));
 
-        $res = $this->client->campaigns->replaceElement($elementType, 2, 'blocked');
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/2/blocked/'.$elementType));
+        $res = $this->client->campaigns->replaceElement($elementType, 2, $targetType);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => "campaigns/2/$targetType/$elementType"));
 
-        $res = $this->client->campaigns->removeElement($elementType, 3, 'targeted');
-        $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/3/targeted/'.$elementType));
+        $res = $this->client->campaigns->removeElement($elementType, 3, $targetType);
+        $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/3/$targetType/$elementType"));
 
         if ('countries' !== $elementType) {
-            $res = $this->client->campaigns->removeAllElements($elementType, 4, 'targeted');
-            $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
+            $res = $this->client->campaigns->removeAllElements($elementType, 4, $targetType);
+            $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/4/$targetType/$elementType/all"));
         }
     }
 
