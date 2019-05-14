@@ -439,6 +439,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('statistics_publisher')->category();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/category'));
 
+        $res = $this->client->api('statistics_publisher')->language();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/language'));
+
         $res = $this->client->api('statistics_publisher')->country();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/country'));
 
