@@ -30,6 +30,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     {
         $create = array( 'method' => 'POST' , 'path' => 'campaigns' , 'data' => array(1) );
         $update = array( 'method' => 'PUT' , 'path' => 'campaigns/2' , 'data' => array(3) );
+        $createVariation = array( 'method' => 'POST' , 'path' => 'campaigns/12/variation' , 'data' => array(21) );
 
 
         $res = $this->client->api('campaigns')->all();
@@ -78,6 +79,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('campaigns')->update(2, array(3));
         $this->assertEquals($res, $update );
 
+        $res = $this->client->api('campaigns')->createVariation(12, array(21));
+        $this->assertEquals($res, $createVariation);
+
 
         $res = $this->client->campaigns->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
@@ -121,6 +125,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->campaigns->update(2 , array(3));
         $this->assertEquals($res, $update);
+
+        $res = $this->client->campaigns->createVariation(12, array(21));
+        $this->assertEquals($res, $createVariation);
     }
 
     /**
