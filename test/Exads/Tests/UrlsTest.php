@@ -394,6 +394,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('statistics_advertiser')->variation();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/variation'));
 
+        $res = $this->client->api('statistics_advertiser')->zone();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/zone'));
+
         $res = $this->client->statistics_advertiser->browser();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/browser'));
 
@@ -429,6 +432,10 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->statistics_advertiser->variation();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/variation'));
+
+        $res = $this->client->statistics_advertiser->zone();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/zone'));
+
     }
 
     /**
