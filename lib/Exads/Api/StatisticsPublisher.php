@@ -18,14 +18,4 @@ class StatisticsPublisher extends AbstractStatistics
     {
         return $this->get($this->getPath('sub'), $params);
     }
-
-    /**
-     * @param array $params
-     *
-     * @return array
-     */
-    public function zone(array $params = array())
-    {
-        return $this->get($this->getPath('zone'), $params);
-    }
 }
