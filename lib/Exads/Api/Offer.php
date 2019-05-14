@@ -3,7 +3,7 @@
 namespace Exads\Api;
 
 /**
- * @link   https://api.exads.com/v2/docs/index.html#!/offers
+ * @link   https://api.exoclick.com/v2/docs/index.html#!/47offers
  */
 class Offer extends AbstractApi
 {
