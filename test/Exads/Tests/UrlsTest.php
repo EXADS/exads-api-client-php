@@ -28,9 +28,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      */
     public function testCampaignsMethods()
     {
-        $create = array( 'method' => 'POST' , 'path' => 'campaigns' , 'data' => array(1) );
-        $update = array( 'method' => 'PUT' , 'path' => 'campaigns/2' , 'data' => array(3) );
-        $createVariation = array( 'method' => 'POST' , 'path' => 'campaigns/12/variation' , 'data' => array(21) );
+        $create = array('method' => 'POST' , 'path' => 'campaigns' , 'data' => array(1));
+        $update = array('method' => 'PUT' , 'path' => 'campaigns/2' , 'data' => array(3));
+        $createVariation = array('method' => 'POST' , 'path' => 'campaigns/12/variation' , 'data' => array(21));
 
 
         $res = $this->client->api('campaigns')->all();
@@ -74,10 +74,10 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         ));
 
         $res = $this->client->api('campaigns')->create(array(1));
-        $this->assertEquals($res, $create );
+        $this->assertEquals($res, $create);
 
         $res = $this->client->api('campaigns')->update(2, array(3));
-        $this->assertEquals($res, $update );
+        $this->assertEquals($res, $update);
 
         $res = $this->client->api('campaigns')->createVariation(12, array(21));
         $this->assertEquals($res, $createVariation);
@@ -123,7 +123,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->campaigns->create(array(1));
         $this->assertEquals($res, $create);
 
-        $res = $this->client->campaigns->update(2 , array(3));
+        $res = $this->client->campaigns->update(2, array(3));
         $this->assertEquals($res, $update);
 
         $res = $this->client->campaigns->createVariation(12, array(21));
@@ -134,7 +134,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider getValidElementTypes
      */
-    public function testCampaignsMethodsWithElementTypeTarget($elementType,$targetType,$all)
+    public function testCampaignsMethodsWithElementTypeTarget($elementType, $targetType, $all)
     {
         $res = $this->client->api('campaigns')->addElement($elementType, 1, $targetType);
         $this->assertEquals($res, array('method' => 'POST', 'path' => "campaigns/1/$targetType/$elementType"));
@@ -284,15 +284,15 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @expectedException \InvalidArgumentException
      * @dataProvider getTargetOnlyElements
      */
-    public function testUnsupportedBlockManipulation($element,$op,$accessVia)
+    public function testUnsupportedBlockManipulation($element, $op, $accessVia)
     {
         $access = $this->getCampaignObjectVia($accessVia);
 
-        if($op == "add" ){
+        if ($op == "add") {
             $access->addElement($element, 1, 'blocked');
-        } elseif( $op == "remove" ) {
+        } elseif ($op == "remove") {
             $access->removeElement($element, 1, 'blocked');
-        } elseif( $op == "replace" ) {
+        } elseif ($op == "replace") {
             $access->replaceElement($element, 1, 'blocked');
         }
     }
@@ -328,7 +328,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
     public function getDeleteAllUnsuportedElements()
     {
-        return array( 
+        return array(
                         array('categories', 'getter', 'blocked'),
                         array('categories', 'getter', 'targeted'),
                         array('categories', 'api', 'blocked'),
@@ -541,7 +541,6 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->statistics_advertiser->zone();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/zone'));
-
     }
 
     /**
@@ -723,8 +722,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         if ($accessVia == "getter") {
             $access = $this->client->campaigns;
-        }
-        elseif($accessVia == "api") {
+        } elseif ($accessVia == "api") {
             $access = $this->client->api('campaigns');
         }
         return $access;

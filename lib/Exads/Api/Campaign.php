@@ -249,26 +249,18 @@ class Campaign extends AbstractApi
         );
 
         if (null !== $type) {
-
             $elementTypes = $this->getElementTypes($endPoint);
 
-            $realEndPoint = preg_replace('/_(all)$/', '/$1' , $endPoint );
+            $realEndPoint = preg_replace('/_(all)$/', '/$1', $endPoint);
 
-            if ( in_array($realEndPoint, array( 'countries/all' , 'categories/all' ) ) )
-            {
+            if (in_array($realEndPoint, array('countries/all', 'categories/all'))) {
                 throw new \InvalidArgumentException('$realEndPoint does not support all');
-            }
-            elseif ( in_array($realEndPoint, array('countries', 'categories')) && $type == 'blocked' )
-            {
+            } elseif (in_array($realEndPoint, array('countries', 'categories')) && $type == 'blocked') {
                 throw new \InvalidArgumentException("$realEndPoint does not support type $type");
-            }
-            elseif( !in_array($type, array('blocked', 'targeted')) )
-            {
+            } elseif (!in_array($type, array('blocked', 'targeted'))) {
                 throw new \InvalidArgumentException("Unsupported type $type");
-            }
-            else
-            {
-                return sprintf('%s/%s/%s/'.$realEndPoint , $this->apiGroup, urlencode($id), urlencode($type));
+            } else {
+                return sprintf('%s/%s/%s/'.$realEndPoint, $this->apiGroup, urlencode($id), urlencode($type));
             }
         }
 
@@ -292,7 +284,7 @@ class Campaign extends AbstractApi
      */
     private function getElementTypes($type)
     {
-        $type = preg_replace('/_all$/', '' , $type );
+        $type = preg_replace('/_all$/', '', $type);
 
         $elementTypes = array(
             'browsers',
