@@ -134,13 +134,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider getValidElementTypes
      */
-    public function testCampaignsMethodsWithElementType($elementType)
-    {
-        $this->CampaignsMethodsWithElementTypeTargetTest($elementType,'targeted');
-        $this->CampaignsMethodsWithElementTypeTargetTest($elementType,'blocked');
-    }
-
-    private function CampaignsMethodsWithElementTypeTargetTest($elementType,$targetType)
+    public function testCampaignsMethodsWithElementTypeTarget($elementType,$targetType,$all)
     {
         $res = $this->client->api('campaigns')->addElement($elementType, 1, $targetType);
         $this->assertEquals($res, array('method' => 'POST', 'path' => "campaigns/1/$targetType/$elementType"));
@@ -151,7 +145,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('campaigns')->removeElement($elementType, 3, $targetType);
         $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/3/$targetType/$elementType"));
 
-        if ('countries' !== $elementType) {
+        if ($all) {
             $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, $targetType);
             $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/4/$targetType/$elementType/all"));
         }
@@ -165,7 +159,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->campaigns->removeElement($elementType, 3, $targetType);
         $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/3/$targetType/$elementType"));
 
-        if ('countries' !== $elementType) {
+        if ($all) {
             $res = $this->client->campaigns->removeAllElements($elementType, 4, $targetType);
             $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/4/$targetType/$elementType/all"));
         }
@@ -174,16 +168,24 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     public function getValidElementTypes()
     {
         return array(
-            array('browsers'),
-            array('carriers'),
-            array('categories'),
-            array('countries'),
-            array('devices'),
-            array('languages'),
-            array('operating_systems'),
-            array('sites'),
-            array('keywords'),
-            array('ip_ranges'),
+            array('browsers', 'targeted', true),
+            array('browsers', 'blocked', true),
+            array('carriers', 'targeted', true),
+            array('carriers', 'blocked', true),
+            array('categories', 'targeted', false),
+            array('countries', 'targeted', false),
+            array('devices', 'targeted', true),
+            array('devices', 'blocked', true),
+            array('languages', 'targeted', true),
+            array('languages', 'blocked', true),
+            array('operating_systems', 'blocked', true),
+            array('operating_systems', 'targeted', true),
+            array('sites', 'blocked', true),
+            array('sites', 'targeted', true),
+            array('keywords', 'targeted', true),
+            array('keywords', 'blocked', true),
+            array('ip_ranges', 'targeted', true),
+            array('ip_ranges', 'blocked', true),
         );
     }
 
@@ -258,6 +260,86 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     {
         $this->client->campaigns->removeAllElements('bla', 1, 'targeted');
     }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCampaignsMethodsWithInvalidElementType9()
+    {
+        $this->client->campaigns->removeElement('sites', 1, 'argeted');
+    }
+   
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCampaignsMethodsWithInvalidElementType10()
+    {
+        $this->client->campaigns->removeElement('browsers', 1, 'target');
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @dataProvider getTargetOnlyElements
+     */
+    public function testUnsupportedBlockManipulation($element,$op,$accessVia)
+    {
+        $access = $this->getCampaignObjectVia($accessVia);
+
+        if($op == "add" ){
+            $access->addElement($element, 1, 'blocked');
+        } elseif( $op == "remove" ) {
+            $access->removeElement($element, 1, 'blocked');
+        } elseif( $op == "replace" ) {
+            $access->replaceElement($element, 1, 'blocked');
+        }
+    }
+
+    public function getTargetOnlyElements()
+    {
+        return array(
+                        array('categories', 'add', 'getter'),
+                        array('categories', 'remove', 'getter'),
+                        array('categories', 'replace', 'getter'),
+                        array('categories', 'add', 'api'),
+                        array('categories', 'remove', 'api'),
+                        array('categories', 'replace', 'api'),
+                        array('countries', 'add', 'getter'),
+                        array('countries', 'remove', 'getter'),
+                        array('countries', 'replace', 'getter'),
+                        array('countries', 'add', 'api'),
+                        array('countries', 'remove', 'api'),
+                        array('countries', 'replace', 'api'),
+                );
+    }
+
+    /**
+      * @test
+      * @expectedException \InvalidArgumentException
+      * @dataProvider getDeleteAllUnsuportedElements
+      */
+    public function testUnsupportedAllManipulation($element, $accessVia, $type)
+    {
+        $access = $this->getCampaignObjectVia($accessVia);
+        $access->removeAllElements($element, 12, $type);
+    }
+
+    public function getDeleteAllUnsuportedElements()
+    {
+        return array( 
+                        array('categories', 'getter', 'blocked'),
+                        array('categories', 'getter', 'targeted'),
+                        array('categories', 'api', 'blocked'),
+                        array('categories', 'api', 'targeted'),
+                        array('countries', 'getter', 'blocked'),
+                        array('countries', 'getter', 'targeted'),
+                        array('countries', 'api', 'blocked'),
+                        array('countries', 'api', 'targeted'),
+                );
+    }
+
 
     /**
      * @test
@@ -633,5 +715,18 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->campaigns->all(array('offset' => 100));
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));
+    }
+
+    private function getCampaignObjectVia($accessVia)
+    {
+        $access = null;
+
+        if ($accessVia == "getter") {
+            $access = $this->client->campaigns;
+        }
+        elseif($accessVia == "api") {
+            $access = $this->client->api('campaigns');
+        }
+        return $access;
     }
 }
