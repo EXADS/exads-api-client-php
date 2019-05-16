@@ -10,7 +10,7 @@ class TestUrlClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\TestUrlClient
      * @test
      */
-    public function test_get_returns_path_and_method()
+    public function testGetReturnsPathAndMethod()
     {
         $expectedReturn = array('method' => 'GET', 'path' => '/some/path');
         $client = new TestUrlClient('http://localhost');
@@ -21,7 +21,7 @@ class TestUrlClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\TestUrlClient
      * @test
      */
-    public function test_delete_returns_path_and_method()
+    public function testDeleteReturnsPathAndMethod()
     {
         $expectedReturn = array('method' => 'DELETE', 'path' => '/some/path');
         $client = new TestUrlClient('http://localhost');
@@ -32,7 +32,7 @@ class TestUrlClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\TestUrlClient
      * @test
      */
-    public function test_post_returns_path_and_method()
+    public function testPostReturnsPathAndMethod()
     {
         $expectedReturn = array('method' => 'POST', 'path' => '/some/path');
         $client = new TestUrlClient('http://localhost');
@@ -46,7 +46,7 @@ class TestUrlClientTest extends \PHPUnit_Framework_TestCase
      * @covers \Exads\TestUrlClient
      * @test
      */
-    public function test_put_returns_path_and_method()
+    public function testPutReturnsPathAndMethod()
     {
         $expectedReturn = array('method' => 'PUT', 'path' => '/some/path');
         $client = new TestUrlClient('http://localhost');

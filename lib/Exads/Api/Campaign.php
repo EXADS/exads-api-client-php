@@ -3,7 +3,7 @@
 namespace Exads\Api;
 
 /**
- * @link   https://api.exads.com/v2/docs/index.html#!/campaigns
+ * @link   https://api.exoclick.com/v2/docs/index.html#!/47campaigns
  */
 class Campaign extends AbstractApi
 {
@@ -249,16 +249,21 @@ class Campaign extends AbstractApi
         );
 
         if (null !== $type) {
-            // add targeted/blocked elements routes
             $elementTypes = $this->getElementTypes($endPoint);
-            foreach ($elementTypes as $elementType) {
-                $pathMapping[$elementType] = '%s/%s/%s/'.$elementType;
-                if ('countries' === $elementType) {
-                    continue;
-                }
-                $pathMapping[$elementType.'_all'] = '%s/%s/%s/'.$elementType.'/all';
+
+            $realEndPoint = preg_replace('/_(all)$/', '/$1', $endPoint);
+
+            if (in_array($realEndPoint, array('countries/all', 'categories/all'))) {
+                throw new \InvalidArgumentException("$realEndPoint does not exist");
+            } elseif (in_array($realEndPoint, array('countries', 'categories')) && $type == 'blocked') {
+                throw new \InvalidArgumentException("$realEndPoint does not support type $type");
+            } elseif (!in_array($type, array('blocked', 'targeted'))) {
+                throw new \InvalidArgumentException("Unsupported type $type");
+            } else {
+                return sprintf('%s/%s/%s/'.$realEndPoint, $this->apiGroup, urlencode($id), urlencode($type));
             }
         }
+
         if (!isset($pathMapping[$endPoint])) {
             throw new \InvalidArgumentException('Non existing path');
         }
@@ -267,11 +272,7 @@ class Campaign extends AbstractApi
         if (null === $id) {
             return sprintf($path, $this->apiGroup);
         }
-        if (null === $type) {
-            return sprintf($path, $this->apiGroup, urlencode($id));
-        }
-
-        return sprintf($path, $this->apiGroup, urlencode($id), urlencode($type));
+        return sprintf($path, $this->apiGroup, urlencode($id));
     }
 
     /**
@@ -283,6 +284,8 @@ class Campaign extends AbstractApi
      */
     private function getElementTypes($type)
     {
+        $type = preg_replace('/_all$/', '', $type);
+
         $elementTypes = array(
             'browsers',
             'carriers',
@@ -297,14 +300,10 @@ class Campaign extends AbstractApi
         );
 
         // validate elementType
-        $tmp = $elementTypes;
-        foreach ($tmp as $type) {
-            $tmp[] = $type.'_all';
-        }
-        if (!in_array($type, $tmp, true)) {
+        if (!in_array($type, $elementTypes, true)) {
             throw new \InvalidArgumentException(
                 sprintf(
-                    'Unknown element type "%s". Availabe types : %s',
+                    'Unknown element type "%s". Available types : %s',
                     $type,
                     implode(', ', $elementTypes)
                 )

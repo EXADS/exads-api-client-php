@@ -18,7 +18,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_invalid_api_name()
+    public function testInvalidApiName()
     {
         $this->client->bla;
     }
@@ -26,8 +26,13 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_campaigns_methods()
+    public function testCampaignsMethods()
     {
+        $create = array('method' => 'POST' , 'path' => 'campaigns' , 'data' => array(1));
+        $update = array('method' => 'PUT' , 'path' => 'campaigns/2' , 'data' => array(3));
+        $createVariation = array('method' => 'POST' , 'path' => 'campaigns/12/variation' , 'data' => array(21));
+
+
         $res = $this->client->api('campaigns')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
 
@@ -68,6 +73,16 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
             'data' => array(1),
         ));
 
+        $res = $this->client->api('campaigns')->create(array(1));
+        $this->assertEquals($res, $create);
+
+        $res = $this->client->api('campaigns')->update(2, array(3));
+        $this->assertEquals($res, $update);
+
+        $res = $this->client->api('campaigns')->createVariation(12, array(21));
+        $this->assertEquals($res, $createVariation);
+
+
         $res = $this->client->campaigns->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns'));
 
@@ -104,56 +119,73 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
             'path' => 'campaigns/restore',
             'data' => array(1, 2),
         ));
+
+        $res = $this->client->campaigns->create(array(1));
+        $this->assertEquals($res, $create);
+
+        $res = $this->client->campaigns->update(2, array(3));
+        $this->assertEquals($res, $update);
+
+        $res = $this->client->campaigns->createVariation(12, array(21));
+        $this->assertEquals($res, $createVariation);
     }
 
     /**
      * @test
      * @dataProvider getValidElementTypes
      */
-    public function test_campaigns_methods_with_element_type($elementType)
+    public function testCampaignsMethodsWithElementTypeTarget($elementType, $targetType, $all)
     {
-        $res = $this->client->api('campaigns')->addElement($elementType, 1, 'targeted');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'campaigns/1/targeted/'.$elementType));
+        $res = $this->client->api('campaigns')->addElement($elementType, 1, $targetType);
+        $this->assertEquals($res, array('method' => 'POST', 'path' => "campaigns/1/$targetType/$elementType"));
 
-        $res = $this->client->api('campaigns')->replaceElement($elementType, 2, 'blocked');
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/2/blocked/'.$elementType));
+        $res = $this->client->api('campaigns')->replaceElement($elementType, 2, $targetType);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => "campaigns/2/$targetType/$elementType"));
 
-        $res = $this->client->api('campaigns')->removeElement($elementType, 3, 'targeted');
-        $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/3/targeted/'.$elementType));
+        $res = $this->client->api('campaigns')->removeElement($elementType, 3, $targetType);
+        $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/3/$targetType/$elementType"));
 
-        if ('countries' !== $elementType) {
-            $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, 'targeted');
-            $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
+        if ($all) {
+            $res = $this->client->api('campaigns')->removeAllElements($elementType, 4, $targetType);
+            $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/4/$targetType/$elementType/all"));
         }
 
-        $res = $this->client->campaigns->addElement($elementType, 1, 'targeted');
-        $this->assertEquals($res, array('method' => 'POST', 'path' => 'campaigns/1/targeted/'.$elementType));
+        $res = $this->client->campaigns->addElement($elementType, 1, $targetType);
+        $this->assertEquals($res, array('method' => 'POST', 'path' => "campaigns/1/$targetType/$elementType"));
 
-        $res = $this->client->campaigns->replaceElement($elementType, 2, 'blocked');
-        $this->assertEquals($res, array('method' => 'PUT', 'path' => 'campaigns/2/blocked/'.$elementType));
+        $res = $this->client->campaigns->replaceElement($elementType, 2, $targetType);
+        $this->assertEquals($res, array('method' => 'PUT', 'path' => "campaigns/2/$targetType/$elementType"));
 
-        $res = $this->client->campaigns->removeElement($elementType, 3, 'targeted');
-        $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/3/targeted/'.$elementType));
+        $res = $this->client->campaigns->removeElement($elementType, 3, $targetType);
+        $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/3/$targetType/$elementType"));
 
-        if ('countries' !== $elementType) {
-            $res = $this->client->campaigns->removeAllElements($elementType, 4, 'targeted');
-            $this->assertEquals($res, array('method' => 'DELETE', 'path' => 'campaigns/4/targeted/'.$elementType.'/all'));
+        if ($all) {
+            $res = $this->client->campaigns->removeAllElements($elementType, 4, $targetType);
+            $this->assertEquals($res, array('method' => 'DELETE', 'path' => "campaigns/4/$targetType/$elementType/all"));
         }
     }
 
     public function getValidElementTypes()
     {
         return array(
-            array('browsers'),
-            array('carriers'),
-            array('categories'),
-            array('countries'),
-            array('devices'),
-            array('languages'),
-            array('operating_systems'),
-            array('sites'),
-            array('keywords'),
-            array('ip_ranges'),
+            array('browsers', 'targeted', true),
+            array('browsers', 'blocked', true),
+            array('carriers', 'targeted', true),
+            array('carriers', 'blocked', true),
+            array('categories', 'targeted', false),
+            array('countries', 'targeted', false),
+            array('devices', 'targeted', true),
+            array('devices', 'blocked', true),
+            array('languages', 'targeted', true),
+            array('languages', 'blocked', true),
+            array('operating_systems', 'blocked', true),
+            array('operating_systems', 'targeted', true),
+            array('sites', 'blocked', true),
+            array('sites', 'targeted', true),
+            array('keywords', 'targeted', true),
+            array('keywords', 'blocked', true),
+            array('ip_ranges', 'targeted', true),
+            array('ip_ranges', 'blocked', true),
         );
     }
 
@@ -161,10 +193,17 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_campaigns_methods_with_invalid_element_type()
+    public function testCampaignsMethodsWithInvalidElementType()
     {
         $this->client->api('campaigns')->addElement('bla', 1, 'targeted');
+    }
 
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCampaignsMethodWithInvalidElmentType2()
+    {
         $this->client->campaigns->addElement('bla', 1, 'targeted');
     }
 
@@ -172,10 +211,17 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_campaigns_methods_with_invalid_element_type2()
+    public function testCampaignsMethodsWithInvalidElementType3()
     {
         $this->client->api('campaigns')->replaceElement('bla', 1, 'blocked');
+    }
 
+    /**
+      * @test
+      * @expectedException \InvalidArgumentException
+      */
+    public function testCampaignsMethodsWithInvalidElementType4()
+    {
         $this->client->campaigns->replaceElement('bla', 1, 'blocked');
     }
 
@@ -183,10 +229,17 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_campaigns_methods_with_invalid_element_type3()
+    public function testCampaignsMethodsWithInvalidElementType5()
     {
         $this->client->api('campaigns')->removeElement('bla', 1, 'targeted');
+    }
 
+    /**
+      * @test
+      * @expectedException \InvalidArgumentException
+      */
+    public function testCampaignsMethodWithInvalidElementType6()
+    {
         $this->client->campaigns->removeElement('bla', 1, 'targeted');
     }
 
@@ -194,17 +247,104 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
      * @test
      * @expectedException \InvalidArgumentException
      */
-    public function test_campaigns_methods_with_invalid_element_type4()
+    public function testCampaignsMethodsWithInvalidElementType7()
     {
         $this->client->api('campaigns')->removeAllElements('bla', 1, 'targeted');
+    }
 
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCampaignsMethodsWithInvalidElementType8()
+    {
         $this->client->campaigns->removeAllElements('bla', 1, 'targeted');
     }
 
     /**
      * @test
+     * @expectedException \InvalidArgumentException
      */
-    public function test_login_methods()
+    public function testCampaignsMethodsWithInvalidElementType9()
+    {
+        $this->client->campaigns->removeElement('sites', 1, 'argeted');
+    }
+   
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCampaignsMethodsWithInvalidElementType10()
+    {
+        $this->client->campaigns->removeElement('browsers', 1, 'target');
+    }
+
+    /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     * @dataProvider getTargetOnlyElements
+     */
+    public function testUnsupportedBlockManipulation($element, $op, $accessVia)
+    {
+        $access = $this->getCampaignObjectVia($accessVia);
+
+        if ($op == "add") {
+            $access->addElement($element, 1, 'blocked');
+        } elseif ($op == "remove") {
+            $access->removeElement($element, 1, 'blocked');
+        } elseif ($op == "replace") {
+            $access->replaceElement($element, 1, 'blocked');
+        }
+    }
+
+    public function getTargetOnlyElements()
+    {
+        return array(
+                        array('categories', 'add', 'getter'),
+                        array('categories', 'remove', 'getter'),
+                        array('categories', 'replace', 'getter'),
+                        array('categories', 'add', 'api'),
+                        array('categories', 'remove', 'api'),
+                        array('categories', 'replace', 'api'),
+                        array('countries', 'add', 'getter'),
+                        array('countries', 'remove', 'getter'),
+                        array('countries', 'replace', 'getter'),
+                        array('countries', 'add', 'api'),
+                        array('countries', 'remove', 'api'),
+                        array('countries', 'replace', 'api'),
+                );
+    }
+
+    /**
+      * @test
+      * @expectedException \InvalidArgumentException
+      * @dataProvider getDeleteAllUnsuportedElements
+      */
+    public function testUnsupportedAllManipulation($element, $accessVia, $type)
+    {
+        $access = $this->getCampaignObjectVia($accessVia);
+        $access->removeAllElements($element, 12, $type);
+    }
+
+    public function getDeleteAllUnsuportedElements()
+    {
+        return array(
+                        array('categories', 'getter', 'blocked'),
+                        array('categories', 'getter', 'targeted'),
+                        array('categories', 'api', 'blocked'),
+                        array('categories', 'api', 'targeted'),
+                        array('countries', 'getter', 'blocked'),
+                        array('countries', 'getter', 'targeted'),
+                        array('countries', 'api', 'blocked'),
+                        array('countries', 'api', 'targeted'),
+                );
+    }
+
+
+    /**
+     * @test
+     */
+    public function testLoginMethods()
     {
         $res = $this->client->api('login')->getToken('aaa', 'bbb');
         $this->assertEquals($res, array(
@@ -238,7 +378,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_collections_methods()
+    public function testCollectionsMethods()
     {
         $res = $this->client->api('collections')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'collections'));
@@ -286,7 +426,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_payments_advertiser_methods()
+    public function testPaymentsAdvertiserMethods()
     {
         $res = $this->client->api('payments_advertiser')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'payments/advertiser'));
@@ -298,7 +438,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_payments_publisher_methods()
+    public function testPaymentsPublisherMethods()
     {
         $res = $this->client->api('payments_publisher')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'payments/publisher'));
@@ -310,7 +450,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_sites_methods()
+    public function testSitesMethods()
     {
         $res = $this->client->api('sites')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'sites'));
@@ -322,7 +462,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_statistics_advertiser_methods()
+    public function testStatisticsAdvertiserMethods()
     {
         $res = $this->client->api('statistics_advertiser')->browser();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/browser'));
@@ -360,6 +500,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $res = $this->client->api('statistics_advertiser')->variation();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/variation'));
 
+        $res = $this->client->api('statistics_advertiser')->zone();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/zone'));
+
         $res = $this->client->statistics_advertiser->browser();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/browser'));
 
@@ -395,12 +538,15 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->statistics_advertiser->variation();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/variation'));
+
+        $res = $this->client->statistics_advertiser->zone();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/advertiser/zone'));
     }
 
     /**
      * @test
      */
-    public function test_statistics_publisher_methods()
+    public function testStatisticsPublisherMethods()
     {
         $res = $this->client->api('statistics_publisher')->browser();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/browser'));
@@ -410,6 +556,9 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
 
         $res = $this->client->api('statistics_publisher')->category();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/category'));
+
+        $res = $this->client->api('statistics_publisher')->language();
+        $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/language'));
 
         $res = $this->client->api('statistics_publisher')->country();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'statistics/publisher/country'));
@@ -475,7 +624,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_user_methods()
+    public function testUserMethods()
     {
         $res = $this->client->api('user')->show();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'user'));
@@ -529,7 +678,7 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function test_zone_methods()
+    public function testZoneMethods()
     {
         $res = $this->client->api('zones')->all();
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'zones'));
@@ -538,15 +687,44 @@ class UrlsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'zones'));
     }
 
+
+    /**
+     *
+     * @test
+     */
+    public function testOfferMethods()
+    {
+        $offer_all = array('method' => 'GET', 'path' => 'offers');
+
+
+        $res = $this->client->api('offers')->all();
+        $this->assertEquals($res, $offer_all);
+
+        $res = $this->client->offers->all();
+        $this->assertEquals($res, $offer_all);
+    }
+
     /**
      * @test
      */
-    public function test_get_parameters_presence()
+    public function testGetParametersPresence()
     {
         $res = $this->client->api('campaigns')->all(array('offset' => 100));
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));
 
         $res = $this->client->campaigns->all(array('offset' => 100));
         $this->assertEquals($res, array('method' => 'GET', 'path' => 'campaigns?offset=100'));
+    }
+
+    private function getCampaignObjectVia($accessVia)
+    {
+        $access = null;
+
+        if ($accessVia == "getter") {
+            $access = $this->client->campaigns;
+        } elseif ($accessVia == "api") {
+            $access = $this->client->api('campaigns');
+        }
+        return $access;
     }
 }
