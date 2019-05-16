@@ -254,7 +254,7 @@ class Campaign extends AbstractApi
             $realEndPoint = preg_replace('/_(all)$/', '/$1', $endPoint);
 
             if (in_array($realEndPoint, array('countries/all', 'categories/all'))) {
-                throw new \InvalidArgumentException('$realEndPoint does not support all');
+                throw new \InvalidArgumentException("$realEndPoint does not exist");
             } elseif (in_array($realEndPoint, array('countries', 'categories')) && $type == 'blocked') {
                 throw new \InvalidArgumentException("$realEndPoint does not support type $type");
             } elseif (!in_array($type, array('blocked', 'targeted'))) {
